@@ -1,7 +1,13 @@
+import React from "react";
+import AppRoutes from "./routes";
+
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 function App() {
   return (
     <div>
-      <h1>Seja Bem Vindo ao Facil Gestao</h1>
+      <AppRoutes/>
     </div>
   );
 }
