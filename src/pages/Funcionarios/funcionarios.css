@@ -17,3 +17,8 @@ body {
 .titulo-page {
     margin: 0 35px;
 }
+
+.funcionarios-container {
+    width: 100%;
+    background-color: #BAC1CB;
+}

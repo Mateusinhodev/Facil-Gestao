@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import logo from '../../images/logo.png'
-import notificacao from '../../images/notificacao.png'
-import user from '../../images/user.png'
+import logo from '../../assets/logo.png'
+import notificacao from '../../assets/notificacao.png'
+import user from '../../assets/user.png'
 
 import "./header.css"
 

@@ -1,5 +1,6 @@
 import React from "react";
 import './addfuncionario.css'
+import FormFuncionario from "../Form Funcionario";
 
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -11,45 +12,6 @@ const IconAdd = () => {
         <path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
         </svg>
     )
-}
-
-const Form = () => {
-
-    const [form, setForm] = useState({
-        nome: '',
-        cargo: '',
-        salario: '',
-        dataDeContratacao: '',
-        periodoDeContrato: ''
-    });
-
-    const dadosForm = (e) => {
-        setForm({...form, [e.target.name]: e.target.value})
-    };
-
-    return(
-        <div className="form-container">
-            <label>Nome:
-                <input type='text' name='nome' value={form.nome} onChange={dadosForm}/>
-            </label>
-
-            <label>Cargo:
-                <input type='text' name='cargo' value={form.cargo} onChange={dadosForm}/>
-            </label>
-
-            <label>Salario:
-                <input type='number' name='salario' value={form.salario} onChange={dadosForm}/>
-            </label>
-
-            <label> Data de Contratação:
-                <input type="date" name='dataDeContratacao' value={form.dataDeContratacao} onChange={dadosForm}/>
-            </label>
-
-            <label>Periodo de Contrato (meses):
-                <input type='number' name='periodoDeContrato' value={form.periodoDeContrato} onChange={dadosForm}/> 
-            </label>
-        </div>
-    );
 }
 
 export default function AdicionarFuncionario() {
@@ -69,7 +31,7 @@ export default function AdicionarFuncionario() {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form/>
+                <FormFuncionario/>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={handleShow}>
