@@ -4,9 +4,9 @@ import React from "react";
 import AdicionarFuncionario from "../../components/Add Funcionario";
 import "./funcionarios.css"
 
-import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
+import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
 
-import users from "../../assets/Users.png"
 
 
 function Cabecalho() {
@@ -15,25 +15,45 @@ function Cabecalho() {
             <h1 className="titulo-page">Funcionários</h1>
             <AdicionarFuncionario/>
         </div>
-            
-        
     );
 }
 
-function TotalFuncionarios () {
-    return (
-        <div className="funcionários-total">
-            <img className="funcionarios-icon" src={users} alt=''/>
-            <p> Total de Funcionários: <span>XX</span></p>
+function InfoCard({ Icon, title, value }) {
+    return(
+        <div className="info-card">
+            <Icon className="info-card-icon" />
+            <p>{title}</p>
+            <span>{value}</span>
         </div>
-    )
+    );
+}
+
+function PesquisarFuncionario() {
+    return(
+        <div className="search-container">
+            <input 
+                type="text"
+                className="search"
+                placeholder="Pesquise aqui pelo funcionário"
+            />
+
+            <button className="search-button"><Search/></button>
+
+        </div>
+    );
 }
 
 export default function Funcionarios() {
     return (
-        <div className="funcionarios-container">
+        <div className="dashboard-funcionários">
             <Cabecalho/>
-            <TotalFuncionarios/>
+
+            <div className="dashboard-info">
+                <InfoCard Icon={Users} title="Total de Funcionários" value="XX"/>
+                <InfoCard Icon={Wallet} title="Folha de Pagamento" value="R$ 100.000,00"/>
+                <PesquisarFuncionario/>
+            </div>
+            
             <div className="d-flex justify-content-center" >
                 <MDBTable align='middle' className="mt-3 m-5 rounded-3">
                     <MDBTableHead>
@@ -81,7 +101,5 @@ export default function Funcionarios() {
                 </MDBTable>
             </div>
         </div>
-
-        
     );
 }

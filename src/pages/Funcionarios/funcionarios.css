@@ -18,7 +18,75 @@ body {
     margin: 0 35px;
 }
 
-.funcionarios-container {
+.dashboard-funcionários {
     width: 100%;
     background-color: #BAC1CB;
+}
+
+.dashboard-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.info-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #62B5F0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    margin: 15px 35px;
+    border-radius: 8px;
+    width: 250px;
+    height: 80px;
+    color: #000;
+    width: fit-content;
+    gap: 10px;
+}
+
+.info-card-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.info-card p {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+}
+
+.info-card span {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.search-container {
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.search {
+    border: 2px solid #CCC;
+    outline: none;
+    border-radius: 10px;
+    width: 750px;
+    height: 50px;
+    padding-left: 15px;
+    transition: all 5.s;
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-left: 10px; /* Espaço entre o input e o botão */
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
 }
