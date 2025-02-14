@@ -70,7 +70,7 @@ body {
     border: 2px solid #CCC;
     outline: none;
     border-radius: 10px;
-    width: 750px;
+    min-width: 450px;
     height: 50px;
     padding-left: 15px;
     transition: all 5.s;
