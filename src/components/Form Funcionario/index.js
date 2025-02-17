@@ -6,7 +6,15 @@ import {
     MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBRadio,
   } from "mdb-react-ui-kit";
 
-export default function FormFuncionario() {
+export default function FormFuncionario({formDados, onMudancaFormulario}) {
+
+    const capturandoDados = (e) => {
+        const {name, value} = e.target;
+        onMudancaFormulario({
+            ...formDados,
+            [name]: value,
+        });
+    };
     
         return(
             <form className="form-container">
@@ -17,7 +25,7 @@ export default function FormFuncionario() {
                             <MDBCardBody>
                             <MDBRow className="mb-4">
                                 <MDBCol>
-                                <MDBInput label="Nome" id="form1" type="text" />
+                                <MDBInput label="Nome" id="form1" type="text" name="nome" value={formDados.nome} onChange={capturandoDados}/>
                                 </MDBCol>
 
                                 <MDBCol>

@@ -15,10 +15,21 @@ const IconAdd = () => {
 }
 
 export default function AdicionarFuncionario() {
-    const [lgShow, setLgShow] = useState(false);
-    const [show, setShow] = useState(false);
 
-    const handleShow = () => setShow(true);
+    const [lgShow, setLgShow] = useState(false);
+    const [formDados, setFormDados] = useState({
+        nome: ""
+        // Aqui vem outros dados
+    });
+
+    const atualizarDadosForm = (newDados) => {
+        setFormDados(newDados);
+    };
+
+    const enviarDados = () => {
+        console.log("Dados enviado: ", formDados);
+        setLgShow(false); // Fecha o modal após o envio
+    }
 
     return (
         <>
@@ -31,10 +42,10 @@ export default function AdicionarFuncionario() {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <FormFuncionario/>
+                <FormFuncionario formDados={formDados} onMudancaFormulario={atualizarDadosForm}/>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={handleShow}>
+                <Button variant="primary" onClick={enviarDados}>
                     Adicionar Funcionário
                 </Button>
             </Modal.Footer> 
