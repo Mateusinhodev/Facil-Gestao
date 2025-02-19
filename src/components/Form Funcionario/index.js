@@ -29,28 +29,15 @@ export default function FormFuncionario({formDados, onMudancaFormulario}) {
                                 </MDBCol>
 
                                 <MDBCol>
-                                <MDBInput label="Sobrenome" id="form2" type="text" />
+                                <MDBInput label="Sobrenome" id="form2" type="text" name="sobrenome" value={formDados.sobrenome} onChange={capturandoDados}/>
                                 </MDBCol>
                             </MDBRow>
 
-                            <MDBInput
-                                wrapperClass="mb-4"
-                                label="Endereço"
-                                id="form3"
-                                type="text"
-                            />
-                            <MDBInput
-                                wrapperClass="mb-4"
-                                label="Email"
-                                id="form4"
-                                type="email"
-                            />
-                            <MDBInput
-                                wrapperClass="mb-4"
-                                label="Telefone"
-                                id="form5"
-                                type="number"
-                            />
+                            <MDBInput wrapperClass="mb-4" label="Endereço" id="form3" type="text" name="endereco" value={formDados.endereco} onChange={capturandoDados}/>
+
+                            <MDBInput wrapperClass="mb-4" label="Email" id="form4" type="email" name="email" value={formDados.email} onChange={capturandoDados}/>
+
+                            <MDBInput wrapperClass="mb-4" label="Telefone" id="form5" type="number" name="telefone" value={formDados.telefone} onChange={capturandoDados}/>
 
                             <MDBCol md='6' className='mb-4'>
                                 <label className="fw-bold">Gênero </label>
@@ -62,47 +49,24 @@ export default function FormFuncionario({formDados, onMudancaFormulario}) {
 
                             <MDBRow>
                                 <MDBCol md="4">
-                                <MDBInput
-                                    label="Cargo"
-                                    id="form8"
-                                    type="text"
-                                    wrapperClass="mb-4"
-                                />
+                                    <MDBInput label="Cargo" id="form8" type="text" wrapperClass="mb-4" name="cargo" value={formDados.cargo} onChange={capturandoDados}/>
                                 </MDBCol>
+
                                 <MDBCol md="4">
-                                <MDBInput
-                                    label="Salário"
-                                    id="form6"
-                                    type="text"
-                                    wrapperClass="mb-4"
-                                />
+                                    <MDBInput label="Salário" id="form6" type="text" wrapperClass="mb-4" name="salario" value={formDados.salario} onChange={capturandoDados}/>
                                 </MDBCol>
+
                                 <MDBCol md="4">
-                                <MDBInput
-                                    label="Data de Contratação"
-                                    id="form7"
-                                    type="date"
-                                    wrapperClass="mb-4"
-                                />
+                                    <MDBInput label="Data de Contratação" id="form7" type="date" wrapperClass="mb-4" name="datadecontratacao" value={formDados.datadecontratacao} onChange={capturandoDados}/>
                                 </MDBCol>
                             </MDBRow>
 
                             <MDBRow>
                                 <MDBCol md="3">
-                                <MDBInput
-                                    label="Data de Expiração"
-                                    id="form8"
-                                    type="date"
-                                    wrapperClass="mb-4"
-                                />
+                                    <MDBInput label="Data de Expiração" id="form8" type="date" wrapperClass="mb-4" name="datadeexpiracao" value={formDados.datadeexpiracao} onChange={capturandoDados}/>
                                 </MDBCol>
                                 <MDBCol md="3">
-                                <MDBInput
-                                    label="Dias Vingente"
-                                    id="form8"
-                                    type="number"
-                                    wrapperClass="mb-4"
-                                />
+                                    <MDBInput label="Dias Vingente" id="form8" type="number" wrapperClass="mb-4" name="diasvingente" value={formDados.diasvingente} onChange={capturandoDados}/>
                                 </MDBCol>
                             </MDBRow>
                             </MDBCardBody>

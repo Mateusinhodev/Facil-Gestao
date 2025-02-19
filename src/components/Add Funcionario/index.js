@@ -18,8 +18,16 @@ export default function AdicionarFuncionario() {
 
     const [lgShow, setLgShow] = useState(false);
     const [formDados, setFormDados] = useState({
-        nome: ""
-        // Aqui vem outros dados
+        nome: '',
+        sobrenome: '',
+        endereco: '',
+        email: '',
+        telefone: '',
+        cargo: '',
+        salario: '',
+        datadecontratacao: '',
+        datadeexpiracao: '',
+        diasvingente: ''
     });
 
     const atualizarDadosForm = (newDados) => {
