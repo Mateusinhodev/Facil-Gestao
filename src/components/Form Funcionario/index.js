@@ -42,9 +42,9 @@ export default function FormFuncionario({formDados, onMudancaFormulario}) {
                             <MDBCol md='6' className='mb-4'>
                                 <label className="fw-bold">Gênero </label>
                                 <br/>
-                                <MDBRadio name='inlineRadio' id='inlineRadio1' value='option1' label='Feminino' inline />
-                                <MDBRadio name='inlineRadio' id='inlineRadio2' value='option2' label='Masculino' inline />
-                                <MDBRadio name='inlineRadio' id='inlineRadio3' value='option3' label='Outro' inline />
+                                <MDBRadio name='genero' id='inlineRadio1' value='Feminino' label='Feminino' inline onChange={capturandoDados}/>
+                                <MDBRadio name='genero' id='inlineRadio2' value='Masculino' label='Masculino' inline onChange={capturandoDados}/>
+                                <MDBRadio name='genero' id='inlineRadio3' value='Outro' label='Outro' inline onChange={capturandoDados}/>
                             </MDBCol>
 
                             <MDBRow>
@@ -73,7 +73,7 @@ export default function FormFuncionario({formDados, onMudancaFormulario}) {
                         </MDBCard>
                         </MDBCol>
                     </MDBRow>
-                    </MDBContainer>
+                </MDBContainer>
             </form>
         );
 }

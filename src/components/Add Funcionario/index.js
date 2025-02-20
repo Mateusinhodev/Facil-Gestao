@@ -6,6 +6,9 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import { db } from "../../firebaseConfig";
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+
 const IconAdd = () => {
     return (
         <svg className="icon-add" xmlns="http://www.w3.org/2000/svg" x="px" y="0px" width="20" height="20" viewBox="0 0 24 24">
@@ -23,6 +26,7 @@ export default function AdicionarFuncionario() {
         endereco: '',
         email: '',
         telefone: '',
+        genero: '',
         cargo: '',
         salario: '',
         datadecontratacao: '',
@@ -34,9 +38,24 @@ export default function AdicionarFuncionario() {
         setFormDados(newDados);
     };
 
-    const enviarDados = () => {
-        console.log("Dados enviado: ", formDados);
-        setLgShow(false); // Fecha o modal após o envio
+    const enviarDados = async () => {
+        try {
+            await handleAdd(); // Adiciona os dados no Firestore
+            console.log("Dados enviado: ", formDados);
+            setLgShow(false); // Fecha o modal após o envio
+        } catch (error) {
+            console.log("Erro ao enviar dados: ", error);
+        }
+        
+    }
+
+    async function handleAdd() {
+        try {
+            await addDoc(collection(db, "funcionarios"), formDados); 
+            console.log("Funcionário adicionado com sucesso!");
+        } catch(error) {
+            console.error("ERRO ao adicionar funcionário: ", error);
+        }
     }
 
     return (
