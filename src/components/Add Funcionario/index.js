@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import { db } from "../../firebaseConfig";
-import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 const IconAdd = () => {
     return (

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 
 import AdicionarFuncionario from "../../components/Add Funcionario";
 import "./funcionarios.css"
 
-import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
+import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
-
-
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { useEffect } from "react";
 
 function Cabecalho() {
     return (
@@ -41,9 +42,46 @@ function PesquisarFuncionario() {
 
         </div>
     );
-}
+} 
 
 export default function Funcionarios() {
+
+    const [funcionarios, setFuncionarios] = useState([]);
+
+    useEffect (() => {
+        async function ListarFuncionario() {
+            const funcionariosRef = collection(db, "funcionarios")
+            await getDocs(funcionariosRef)
+            .then((snapshot) => {
+                let lista = [];
+        
+                snapshot.forEach((doc) => {
+                    lista.push({
+                        id: doc.id,
+                        nome: doc.data().nome,
+                        sobrenome: doc.data().sobrenome,
+                        cargo: doc.data().cargo,
+                        salario: doc.data().salario,
+                        genero: doc.data().genero,
+                        endereco: doc.data().endereco,
+                        email: doc.data().email,
+                        diasvingente: doc.data().diasvingente,
+                        datadeexpiracao: doc.data().datadeexpiracao,
+                        datadecontratacao: doc.data().datadecontratacao,            
+                    })
+                })
+                setFuncionarios(lista);
+
+                console.log(lista);
+            })
+            .catch((error) => {
+                console.log("ERRO AO LISTAR FUNCIONÁRIOS", error);
+            })
+        }
+    
+        ListarFuncionario();
+    }, [])
+
     return (
         <div className="dashboard-funcionários">
             <Cabecalho/>
@@ -66,37 +104,40 @@ export default function Funcionarios() {
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                        <tr>
-                        <td>
-                            <div className='d-flex align-items-center'>
-                            <img
-                                src='https://mdbootstrap.com/img/new/avatars/8.jpg'
-                                alt=''
-                                style={{ width: '45px', height: '45px' }}
-                                className='rounded-circle'
-                            />
-                            <div className='ms-3'>
-                                <p className='fw-bold mb-1'>John Doe</p>
-                                <p className='text-muted mb-0'>john.doe@gmail.com</p>
-                            </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p className='fw-normal mb-1'>Software engineer</p>
-                            <p className='text-muted mb-0'>IT department</p>
-                        </td>
-                        <td>
-                            <MDBBadge color='success' pill>
-                            Active
-                            </MDBBadge>
-                        </td>
-                        <td>Senior</td>
-                        <td>
-                            <MDBBtn color='link' rounded size='sm'>
-                                Editar
-                            </MDBBtn>
-                        </td>
-                        </tr>   
+                        {funcionarios.map((funcionario) => {
+                            return(
+                                <tr key={funcionario.id}>
+                                    <td>
+                                        <div className='d-flex align-items-center'>
+                                        <img
+                                            src='https://mdbootstrap.com/img/new/avatars/8.jpg'
+                                            alt=''
+                                            style={{ width: '45px', height: '45px' }}
+                                            className='rounded-circle'
+                                        />
+                                        <div className='ms-3'>
+                                            <p className='fw-bold mb-1'>{funcionario.nome}</p>
+                                            <p className='text-muted mb-0'>{funcionario.email}</p>
+                                        </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p className='fw-normal mb-1'>{funcionario.cargo}</p>
+                                    </td>
+                                    <td>
+                                        <p>{funcionario.salario}</p>
+                                    </td>
+                                    <td>
+                                        <p>{funcionario.genero}</p>
+                                    </td>
+                                    <td>
+                                        <MDBBtn color='link' rounded size='sm'>
+                                            Editar
+                                        </MDBBtn>
+                                    </td>
+                                </tr>   
+                            )
+                        })}
                     </MDBTableBody>
                 </MDBTable>
             </div>
