@@ -98,9 +98,9 @@ export default function Funcionarios() {
                         <tr>
                         <th scope='col'>Nome</th>
                         <th scope='col'>Cargo</th>
-                        <th scope='col'>Salário</th>
-                        <th scope='col'>Data de admissão</th>
-                        <th scope='col'>Ações</th>
+                        <th scope='col' className="text-center">Salário</th>
+                        <th scope='col' className="text-center">Data de admissão</th>
+                        <th scope='col' className="text-center">Ações</th>
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
@@ -125,13 +125,13 @@ export default function Funcionarios() {
                                         <p className='fw-normal mb-1'>{funcionario.cargo}</p>
                                     </td>
                                     <td>
-                                        <p>{funcionario.salario}</p>
+                                        <p className="text-center">R$ {Number(funcionario.salario).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                                     </td>
                                     <td>
-                                        <p>{funcionario.genero}</p>
+                                        <p className="text-center">{new Date(funcionario.datadeexpiracao).toLocaleDateString('pt-BR')}</p>
                                     </td>
-                                    <td>
-                                        <MDBBtn color='link' rounded size='sm'>
+                                    <td className="text-center">
+                                        <MDBBtn color='link' rounded size='sm' >
                                             Editar
                                         </MDBBtn>
                                     </td>
