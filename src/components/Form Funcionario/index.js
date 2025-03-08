@@ -26,18 +26,21 @@ export default function FormFuncionario({formDados, onMudancaFormulario}) {
 
                             <MDBRow>
                                 <MDBCol md="12" className="mb-4">
-                                    <label className="fw-bold">Imagem de Perfil</label>
-                                    <div className="d-block align-items-center">
-                                    <br/>
-                                    <img className="imagem-perfil" src='https://i.im.ge/2025/03/07/pXkouy.image.png' alt=''/>
-                                    <input 
-                                        type="file" 
-                                        accept="image/*" 
-                                        name="imagemPerfil" 
-                                        onChange={capturandoDados} 
-                                        className="input-imagem-perfil" 
-                                        id="imagemPerfil"
-                                    />
+                                    {/* Profile Image */}
+                                    <div className="box box-primary">
+                                    <div className="box-body box-profile">
+                                        <div className="avatar-upload">
+                                        <div className="avatar-edit">
+                                            <form action="" method="post" id="form-image">
+                                            <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                            <label htmlFor="imageUpload"></label>
+                                            </form>
+                                        </div>
+                                        <div className="avatar-preview">
+                                            <img className="profile-user-img img-responsive img-circle" id="imagePreview" src="https://i.im.ge/2025/03/09/pFSNCz.image.png" alt="User profile"/>
+                                        </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </MDBCol>
                             </MDBRow>
