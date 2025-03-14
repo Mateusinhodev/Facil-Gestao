@@ -32,17 +32,11 @@ export default function AdicionarFuncionario() {
         datadecontratacao: '',
         datadeexpiracao: '',
         diasvingente: '',
-        // fotoPerfil: '' // URL da foto
     });
-
-    // const [imagem,setImagem] = useState(null) // Armazena o arquivo selecionado
-    // const [preview, setPreview] = useState(null); // Exibe a pré-visualização da imagem
 
     const atualizarDadosForm = (newDados) => {
         setFormDados(prev => ({...prev, ...newDados}));
     };
-
-    
 
     const enviarDados = async () => {
         try {
@@ -73,7 +67,7 @@ export default function AdicionarFuncionario() {
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <FormFuncionario formDados={formDados} onMudancaFormulario={atualizarDadosForm}/>
+                <FormFuncionario formDados={formDados} atualizarDadosForm={atualizarDadosForm}/>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={enviarDados}>

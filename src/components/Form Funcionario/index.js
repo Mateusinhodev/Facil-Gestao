@@ -1,16 +1,13 @@
-import React from "react";
-// import { useState } from "react";
-
 import './style.css'
 
 import { MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBRadio,} from "mdb-react-ui-kit";
+import UploadAvatar from "../Upload Avatar";
 
-export default function FormFuncionario({formDados, onMudancaFormulario}) {
-    // const [imagemPreview,setImagemPreview] = useState(null);
+export default function FormFuncionario({formDados, atualizarDadosForm}) {
 
     const capturandoDados = (e) => {
         const {name, value} = e.target;
-        onMudancaFormulario({
+        atualizarDadosForm({
             ...formDados,
             [name]: value,
         });
@@ -23,28 +20,9 @@ export default function FormFuncionario({formDados, onMudancaFormulario}) {
                         <MDBCol>
                         <MDBCard>
                             <MDBCardBody>
+                            
 
-                            <MDBRow>
-                                <MDBCol md="12" className="mb-4">
-                                    {/* Profile Image */}
-                                    <div className="box box-primary">
-                                    <div className="box-body box-profile">
-                                        <div className="avatar-upload">
-                                        <div className="avatar-edit">
-                                            <form action="" method="post" id="form-image">
-                                            <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                            <label htmlFor="imageUpload"></label>
-                                            </form>
-                                        </div>
-                                        <div className="avatar-preview">
-                                            <img className="profile-user-img img-responsive img-circle" id="imagePreview" src="https://i.im.ge/2025/03/09/pFSNCz.image.png" alt="User profile"/>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </MDBCol>
-                            </MDBRow>
-
+                            <UploadAvatar/> {/* Componente para adicionar imagem de perfil */}
 
                             <MDBRow className="mb-4">
                                 <MDBCol>
