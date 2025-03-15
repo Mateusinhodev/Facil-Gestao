@@ -3,15 +3,27 @@ import './style.css'
 import { MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBRadio,} from "mdb-react-ui-kit";
 import UploadAvatar from "../Upload Avatar";
 
+// import React, { useEffect } from "react";
+
+
 export default function FormFuncionario({formDados, atualizarDadosForm}) {
+
+    // useEffect(() => {
+    //     // Se o FormFuncionario usar avatarUrl, certifique-se de atualizar o campo
+    // }, [formDados.avatarUrl]);
 
     const capturandoDados = (e) => {
         const {name, value} = e.target;
-        atualizarDadosForm({
-            ...formDados,
-            [name]: value,
-        });
+        atualizarDadosForm({ [name]: value });
     };
+
+    // // Função para atualizar a imagem no estado
+    // const atualizarImagem = (imageUrl) => {
+    //     atualizarDadosForm({
+    //         ...formDados,
+    //         imageUrl, // Adiciona a URL da imagem ao estado do formulário
+    //     })
+    // }
     
         return(
             <form className="form-container">
@@ -21,8 +33,8 @@ export default function FormFuncionario({formDados, atualizarDadosForm}) {
                         <MDBCard>
                             <MDBCardBody>
                             
-
-                            <UploadAvatar/> {/* Componente para adicionar imagem de perfil */}
+                            {/* Passando a função atualizarImagem para UploadAvatar */}
+                            <UploadAvatar atualizarDadosForm={atualizarDadosForm} avatarUrl={formDados.avatarUrl}/> {/* Componente para adicionar imagem de perfil */}
 
                             <MDBRow className="mb-4">
                                 <MDBCol>

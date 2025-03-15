@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./style.css";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 
-export default function UploadAvatar() {
-  const [imageUrl, setImageUrl] = useState("https://i.im.ge/2025/03/09/pFSNCz.image.png");
+export default function UploadAvatar({ atualizarDadosForm, avatarUrl }) {
+  const [imageUrl, setImageUrl] = useState(avatarUrl || "https://i.im.ge/2025/03/09/pFSNCz.image.png");
   const [uploading, setUploading] = useState(false);
   const CLIENT_ID = "a303687760d48f0"; // Certifique-se de que este Client-ID está correto
 
@@ -31,13 +31,14 @@ export default function UploadAvatar() {
       console.log("Resposta do Imgur:", result);
 
       if (result.success) {
-        setImageUrl(result.data.link);
+        const imageUrl = result.data.link; // URL da imagem
+
+        setImageUrl(imageUrl); // Atualiza a visualização da imagem no componente
+        atualizarDadosForm({ avatarUrl: imageUrl }); // Atualiza o estado `formDados` com a URL da imagem
       } else {
-        console.error("Erro no upload:", result);
         alert("Erro no upload: " + (result.data?.error || "Desconhecido"));
       }
     } catch (error) {
-      console.error("Erro ao enviar a imagem:", error);
       alert("Falha ao conectar com o Imgur.");
     } finally {
       setUploading(false);
@@ -52,7 +53,7 @@ export default function UploadAvatar() {
             <div className="avatar-upload">
               <div className="avatar-edit">
                 <input
-                  name="file"
+                  name="avatarUrl"
                   type="file"
                   id="imageUpload"
                   accept=".png, .jpg, .jpeg"
@@ -69,8 +70,8 @@ export default function UploadAvatar() {
                 />
               </div>
             </div>
-            {uploading && <p>Fazendo upload...</p>}
-            <p className="text-center">{imageUrl}</p>
+            {/* {uploading && <p>Fazendo upload...</p>} */}
+            {/* <p className="text-center">{imageUrl}</p> */}
           </div>
         </div>
       </MDBCol>

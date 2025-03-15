@@ -1,6 +1,8 @@
 import React from "react";
 import './addfuncionario.css'
+
 import FormFuncionario from "../Form Funcionario";
+// import UploadAvatar from "../Upload Avatar";
 
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -32,13 +34,24 @@ export default function AdicionarFuncionario() {
         datadecontratacao: '',
         datadeexpiracao: '',
         diasvingente: '',
+        avatarUrl: 'https://i.im.ge/2025/03/09/pFSNCz.image.png', // Adicionando avatarUrl aqui também
     });
+
 
     const atualizarDadosForm = (newDados) => {
         setFormDados(prev => ({...prev, ...newDados}));
     };
 
     const enviarDados = async () => {
+
+        // Verificar se avatarUrl está presente
+        if (!formDados.avatarUrl) {
+            alert("Por favor, adicione uma imagem de avatar.");
+            return;
+        }
+
+        console.log(formDados); // Verifique os dados antes de enviar
+
         try {
             await addDoc(collection(db, "funcionarios"), formDados);
             console.log("Funcionário adicionado com sucesso!", formDados);
@@ -46,7 +59,7 @@ export default function AdicionarFuncionario() {
             setFormDados({
                 nome: '', sobrenome: '', endereco: '', email: '', telefone: '',
                 genero: '', cargo: '', salario: '', datadecontratacao: '',
-                datadeexpiracao: '', diasvingente: '' 
+                datadeexpiracao: '', diasvingente: '', avatarUrl: ''
             })
 
             setLgShow(false); // Fecha o modal após o envio

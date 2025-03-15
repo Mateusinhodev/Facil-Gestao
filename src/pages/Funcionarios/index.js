@@ -67,7 +67,8 @@ export default function Funcionarios() {
                         email: doc.data().email,
                         diasvingente: doc.data().diasvingente,
                         datadeexpiracao: doc.data().datadeexpiracao,
-                        datadecontratacao: doc.data().datadecontratacao,            
+                        datadecontratacao: doc.data().datadecontratacao,
+                        avatarUrl: doc.data().avatarUrl            
                     })
                 })
                 setFuncionarios(lista);
@@ -110,13 +111,13 @@ export default function Funcionarios() {
                                     <td>
                                         <div className='d-flex align-items-center'>
                                         <img
-                                            src='https://mdbootstrap.com/img/new/avatars/8.jpg'
+                                            src={funcionario.avatarUrl}
                                             alt=''
                                             style={{ width: '45px', height: '45px' }}
                                             className='rounded-circle'
                                         />
                                         <div className='ms-3'>
-                                            <p className='fw-bold mb-1'>{funcionario.nome}</p>
+                                            <p className='fw-bold mb-1'>{funcionario.nome} {funcionario.sobrenome}</p>
                                             <p className='text-muted mb-0'>{funcionario.email}</p>
                                         </div>
                                         </div>
