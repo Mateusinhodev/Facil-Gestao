@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 import AdicionarFuncionario from "../../components/Add Funcionario";
-import "./funcionarios.css"
+import EditarFuncionarios from "../../components/Editar Funcionario";
+import "./style.css"
 
-import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
+import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
-import { useEffect } from "react";
+
+import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
+import {ReactComponent as ExcluirIcon} from '../../assets/trash.svg'
+import ExcluirFuncionario from "../../components/Excluir Funcionario";
+
 
 function Cabecalho() {
     return (
@@ -44,9 +49,13 @@ function PesquisarFuncionario() {
     );
 } 
 
+
 export default function Funcionarios() {
 
     const [funcionarios, setFuncionarios] = useState([]);
+    const [modalShow, setModalShow] = React.useState(false);
+    const [modalShowExcluir, setModalShowExcluir] = React.useState(false);
+
 
     useEffect (() => {
         async function ListarFuncionario() {
@@ -132,9 +141,20 @@ export default function Funcionarios() {
                                         <p className="text-center">{new Date(funcionario.datadeexpiracao).toLocaleDateString('pt-BR')}</p>
                                     </td>
                                     <td className="text-center">
-                                        <MDBBtn color='link' rounded size='sm' >
-                                            Editar
-                                        </MDBBtn>
+                                        <div>
+                                            <button className="btn-editar" onClick={() => setModalShow(true)}>
+                                                <EditIcon/>
+                                            </button>
+
+                                            <EditarFuncionarios show={modalShow} onHide={() => setModalShow(false)}/>
+
+                                            <button className="btn-editar" onClick={() => setModalShowExcluir(true)}>
+                                                <ExcluirIcon/>
+                                            </button>
+
+                                            <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)}/>
+                                        </div>
+                                        
                                     </td>
                                 </tr>   
                             )
