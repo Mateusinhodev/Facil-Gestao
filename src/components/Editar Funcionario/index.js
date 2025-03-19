@@ -107,7 +107,6 @@ export default function EditarFuncionarios(props) {
           
         </Modal.Body>
         <Modal.Footer>
-            <Button>Cancelar</Button>
           <Button>Salvar Alterações</Button>
         </Modal.Footer>
       </Modal>

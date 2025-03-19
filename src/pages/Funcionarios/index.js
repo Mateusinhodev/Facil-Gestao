@@ -7,7 +7,7 @@ import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
-import { collection, getDocs } from "firebase/firestore";
+import { doc, collection, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
@@ -49,12 +49,13 @@ function PesquisarFuncionario() {
     );
 } 
 
-
 export default function Funcionarios() {
 
     const [funcionarios, setFuncionarios] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
+
     const [modalShowExcluir, setModalShowExcluir] = React.useState(false);
+    const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState(null);
 
 
     useEffect (() => {
@@ -91,6 +92,17 @@ export default function Funcionarios() {
     
         ListarFuncionario();
     }, [])
+
+    async function handleDelete(id) {
+        try {
+            await deleteDoc(doc(db, "funcionarios", id));
+            // Atualizar o estado local removendo o funcionário
+            setFuncionarios(funcionarios.filter(funcionario => funcionario.id !== id));
+            alert("Funcionario excluído com sucesso!");
+        } catch (error) {
+            console.log("Erro ao excluir funcionário", error);
+        }
+    }
 
     return (
         <div className="dashboard-funcionários">
@@ -148,11 +160,16 @@ export default function Funcionarios() {
 
                                             <EditarFuncionarios show={modalShow} onHide={() => setModalShow(false)}/>
 
-                                            <button className="btn-editar" onClick={() => setModalShowExcluir(true)}>
+                                            <button className="btn-editar" 
+                                                onClick={() => {
+                                                    setFuncionarioParaExcluir(funcionario.id); 
+                                                    setModalShowExcluir(true)
+                                            }}>
                                                 <ExcluirIcon/>
                                             </button>
 
-                                            <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)}/>
+                                            {/* Passando o ID e a função onDelete via props */}
+                                            <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete}/>
                                         </div>
                                         
                                     </td>
