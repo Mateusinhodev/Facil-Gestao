@@ -35,6 +35,7 @@ export default function AdicionarFuncionario() {
         datadeexpiracao: '',
         diasvingente: '',
         avatarUrl: 'https://i.im.ge/2025/03/09/pFSNCz.image.png', // Adicionando avatarUrl aqui também
+        cpf: '',
     });
 
 
@@ -59,7 +60,7 @@ export default function AdicionarFuncionario() {
             setFormDados({
                 nome: '', sobrenome: '', endereco: '', email: '', telefone: '',
                 genero: '', cargo: '', salario: '', datadecontratacao: '',
-                datadeexpiracao: '', diasvingente: '', avatarUrl: ''
+                datadeexpiracao: '', diasvingente: '', avatarUrl: '', cpf: ''
             })
 
             setLgShow(false); // Fecha o modal após o envio

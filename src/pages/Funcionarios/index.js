@@ -52,11 +52,12 @@ function PesquisarFuncionario() {
 export default function Funcionarios() {
 
     const [funcionarios, setFuncionarios] = useState([]);
-    const [modalShow, setModalShow] = React.useState(false);
+
+    const [modalShowEditar, setModalShowEditar] = React.useState(false);
+    const [funcionarioParaEditar, setFuncionarioParaEditar] = useState(null);
 
     const [modalShowExcluir, setModalShowExcluir] = React.useState(false);
     const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState(null);
-
 
     useEffect (() => {
         async function ListarFuncionario() {
@@ -78,7 +79,8 @@ export default function Funcionarios() {
                         diasvingente: doc.data().diasvingente,
                         datadeexpiracao: doc.data().datadeexpiracao,
                         datadecontratacao: doc.data().datadecontratacao,
-                        avatarUrl: doc.data().avatarUrl            
+                        avatarUrl: doc.data().avatarUrl,
+                        telefone: doc.data().telefone,            
                     })
                 })
                 setFuncionarios(lista);
@@ -154,21 +156,30 @@ export default function Funcionarios() {
                                     </td>
                                     <td className="text-center">
                                         <div>
-                                            <button className="btn-editar" onClick={() => setModalShow(true)}>
+                                            {/* BUTTON PARA EDITAR FUNCIONÁRIO */}
+                                            <button className="btn-action" 
+                                                onClick={() => {
+                                                    setFuncionarioParaEditar(funcionario);
+                                                    setModalShowEditar(true);
+                                                }}>
                                                 <EditIcon/>
                                             </button>
+                                            
+                                            {/* ABRE O MODAL PARA EDITAR FUNCIONARIO */}
+                                            <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar} handleEditar={funcionarios}/>
 
-                                            <EditarFuncionarios show={modalShow} onHide={() => setModalShow(false)}/>
-
-                                            <button className="btn-editar" 
+                                            {/* BUTTON PARA EXCLUIR FUNCIONÁRIO */}
+                                            <button className="btn-action" 
                                                 onClick={() => {
                                                     setFuncionarioParaExcluir(funcionario.id); 
-                                                    setModalShowExcluir(true)
+                                                    setModalShowExcluir(true);
                                             }}>
                                                 <ExcluirIcon/>
                                             </button>
 
-                                            {/* Passando o ID e a função onDelete via props */}
+                                            {/* ABRE O MODAL PARA CONFIRMAR EXCLUSÃO FUNCIONARIO */}
+
+                                            {/* Passa o ID e a função onDelete via props */}
                                             <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete}/>
                                         </div>
                                         
