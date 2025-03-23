@@ -53,10 +53,10 @@ export default function Funcionarios() {
 
     const [funcionarios, setFuncionarios] = useState([]);
 
-    const [modalShowEditar, setModalShowEditar] = React.useState(false);
+    const [modalShowEditar, setModalShowEditar] = useState(false);
     const [funcionarioParaEditar, setFuncionarioParaEditar] = useState(null);
 
-    const [modalShowExcluir, setModalShowExcluir] = React.useState(false);
+    const [modalShowExcluir, setModalShowExcluir] = useState(false);
     const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState(null);
 
     useEffect (() => {
@@ -67,6 +67,13 @@ export default function Funcionarios() {
                 let lista = [];
         
                 snapshot.forEach((doc) => {
+
+                    const dataContratacao = new Date(doc.data().datadecontratacao);
+                    const dataExpiracao = new Date(doc.data().datadeexpiracao);
+
+                    const diffTime = dataExpiracao - dataContratacao;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
                     lista.push({
                         id: doc.id,
                         nome: doc.data().nome,
@@ -76,11 +83,12 @@ export default function Funcionarios() {
                         genero: doc.data().genero,
                         endereco: doc.data().endereco,
                         email: doc.data().email,
-                        diasvingente: doc.data().diasvingente,
+                        diasvingente: diffDays,
                         datadeexpiracao: doc.data().datadeexpiracao,
                         datadecontratacao: doc.data().datadecontratacao,
                         avatarUrl: doc.data().avatarUrl,
-                        telefone: doc.data().telefone,            
+                        telefone: doc.data().telefone,   
+                        cpf: doc.data().cpf,         
                     })
                 })
                 setFuncionarios(lista);
@@ -106,13 +114,17 @@ export default function Funcionarios() {
         }
     }
 
+    
+
+    const folhaPagamento = funcionarios.reduce((total, funcionario) => total + Number(funcionario.salario), 0);
+
     return (
         <div className="dashboard-funcionários">
             <Cabecalho/>
 
             <div className="dashboard-info">
-                <InfoCard Icon={Users} title="Total de Funcionários" value="XX"/>
-                <InfoCard Icon={Wallet} title="Folha de Pagamento" value="R$ 100.000,00"/>
+                <InfoCard Icon={Users} title="Total de Funcionários" value={funcionarios.length}/>
+                <InfoCard Icon={Wallet} title="Folha de Pagamento" value={`R$ ${folhaPagamento.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}/>
                 <PesquisarFuncionario/>
             </div>
             
@@ -123,7 +135,9 @@ export default function Funcionarios() {
                         <th scope='col'>Nome</th>
                         <th scope='col'>Cargo</th>
                         <th scope='col' className="text-center">Salário</th>
-                        <th scope='col' className="text-center">Data de admissão</th>
+                        <th scope='col' className="text-center">Data de Contratacao</th>
+                        <th scope='col' className="text-center">Data de Expiracao</th>
+                        <th scope='col' className="text-center">Dias Vingentes</th>
                         <th scope='col' className="text-center">Ações</th>
                         </tr>
                     </MDBTableHead>
@@ -152,7 +166,13 @@ export default function Funcionarios() {
                                         <p className="text-center">R$ {Number(funcionario.salario).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                                     </td>
                                     <td>
+                                        <p className="text-center">{new Date(funcionario.datadecontratacao).toLocaleDateString('pt-BR')}</p>
+                                    </td>
+                                    <td>
                                         <p className="text-center">{new Date(funcionario.datadeexpiracao).toLocaleDateString('pt-BR')}</p>
+                                    </td>
+                                    <td>
+                                        <p className="text-center">{funcionario.diasvingente} dias</p>
                                     </td>
                                     <td className="text-center">
                                         <div>
@@ -166,7 +186,7 @@ export default function Funcionarios() {
                                             </button>
                                             
                                             {/* ABRE O MODAL PARA EDITAR FUNCIONARIO */}
-                                            <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar} handleEditar={funcionarios}/>
+                                            {/* <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar}/> */}
 
                                             {/* BUTTON PARA EXCLUIR FUNCIONÁRIO */}
                                             <button className="btn-action" 
@@ -180,14 +200,20 @@ export default function Funcionarios() {
                                             {/* ABRE O MODAL PARA CONFIRMAR EXCLUSÃO FUNCIONARIO */}
 
                                             {/* Passa o ID e a função onDelete via props */}
-                                            <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete}/>
+                                            {/* <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete}/> */}
                                         </div>
                                         
                                     </td>
                                 </tr>   
                             )
-                        })}
+                        }
+                        )}
                     </MDBTableBody>
+
+                    
+                    <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar} />
+
+                    <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete} />
                 </MDBTable>
             </div>
         </div>

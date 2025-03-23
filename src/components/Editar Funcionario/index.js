@@ -6,10 +6,9 @@ import {
     MDBContainer,
     MDBRow,
     MDBCard,
-    MDBCardText,
     MDBCardBody,
     MDBCardImage,
-  } from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit';
 
 import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
 
@@ -29,93 +28,130 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <EditIcon/> Editar Funcionários
-          </Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter" className="d-flex align-items-center gap-2">
+                <EditIcon style={{ width: '24px', height: '24px' }} /> Editar Funcionário
+            </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+            <MDBContainer className="py-4">
+                <MDBRow className="justify-content-center">
+                    <MDBCol lg="10">
+                        <MDBCard className="shadow-sm border-0 p-4">
+                            <MDBCardBody>
+                                <div className="text-center mb-4">
+                                    <MDBCardImage
+                                        src={funcionario.avatarUrl}
+                                        alt="avatar"
+                                        className="rounded-circle mb-3 shadow"
+                                        style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                                        fluid
+                                    />
+                                    <div>
+                                        <Button variant="outline-primary" size="sm">Alterar Foto</Button>
+                                    </div>
+                                </div>
 
-            <section>
-                <MDBContainer className="py-5">
-                    <MDBRow>
-                        <MDBCol lg="4">
-                            <MDBCard className="mb-4">
-                            <MDBCardBody className="text-center">
-                            <MDBCardImage
-                            src={funcionario.avatarUrl}
-                            alt="avatar"
-                            className="rounded-circle"
-                            style={{ width: '150px', height: '150px' }}
-                            fluid
-                            />
-                                {/* <p className="text-muted mb-1"></p>
-                                <p className="text-muted mb-4"></p> */}
-                                <div className="d-flex justify-content-center mb-2">
-                                {/* <MDBBtn>Follow</MDBBtn>
-                                <MDBBtn outline className="ms-1">Message</MDBBtn> */}
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Nome</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.nome}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Sobrenome</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.sobrenome}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">CPF</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.cpf}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Telefone</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.telefone}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Endereço</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.endereco}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Email</label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        defaultValue={funcionario.email}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Gênero</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.genero}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Cargo</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue={funcionario.cargo}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Salário</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        defaultValue={funcionario.salario}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Data de Contratação</label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        defaultValue={funcionario.datadecontratacao}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Data de Expiração</label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        defaultValue={funcionario.datadeexpiracao}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-bold">Dias Vigentes</label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        defaultValue={funcionario.diasvingente}
+                                    />
                                 </div>
                             </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-
-                        <MDBCol lg="8">
-                            <MDBCard className="mb-4 border-none">
-                            <MDBCardBody>
-                                <MDBRow>
-                                <MDBCol sm="3">
-                                    <MDBCardText>Nome</MDBCardText>
-                                </MDBCol>
-                                <MDBCol sm="9">
-                                    <MDBCardText className="text-muted">{funcionario.nome}</MDBCardText>
-                                </MDBCol>
-                                </MDBRow>
-                                <hr/>
-
-                                <MDBRow>
-                                <MDBCol sm="3">
-                                    <MDBCardText>Email</MDBCardText>
-                                </MDBCol>
-                                <MDBCol sm="9">
-                                    <MDBCardText className="text-muted">{funcionario.email}</MDBCardText>
-                                </MDBCol>
-                                </MDBRow>
-                                <hr/>
-
-                                <MDBRow>
-                                <MDBCol sm="3">
-                                    <MDBCardText>Telefone</MDBCardText>
-                                </MDBCol>
-                                <MDBCol sm="9">
-                                    <MDBCardText className="text-muted">{funcionario.telefone}</MDBCardText>
-                                </MDBCol>
-                                </MDBRow>
-                                <hr/>
-
-                                <MDBRow>
-                                <MDBCol sm="3">
-                                    <MDBCardText>Gênero</MDBCardText>
-                                </MDBCol>
-                                <MDBCol sm="9">
-                                    <MDBCardText className="text-muted">{funcionario.genero}</MDBCardText>
-                                </MDBCol>
-                                </MDBRow>
-                                <hr/>
-
-                                <MDBRow>
-                                <MDBCol sm="3">
-                                    <MDBCardText>Endereco</MDBCardText>
-                                </MDBCol>
-                                <MDBCol sm="9">
-                                    <MDBCardText className="text-muted">{funcionario.endereco}</MDBCardText>
-                                </MDBCol>
-                                </MDBRow>
-                            </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-                    </MDBRow>
-                </MDBContainer>
-            </section>
-          
+                        </MDBCard>
+                    </MDBCol>
+                </MDBRow>
+            </MDBContainer>
         </Modal.Body>
         <Modal.Footer>
           <Button>Salvar Alterações</Button>

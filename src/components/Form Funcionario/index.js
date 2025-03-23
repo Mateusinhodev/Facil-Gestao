@@ -48,7 +48,7 @@ export default function FormFuncionario({formDados, atualizarDadosForm}) {
 
                             <MDBRow className="mb-4">
                                 <MDBCol>
-                                <MDBInput label="Cpf" id="form3" type="number" name="cpf" value={formDados.cpf} onChange={capturandoDados}/>
+                                <MDBInput label="CPF" id="form3" type="number" name="cpf" value={formDados.cpf} onChange={capturandoDados}/>
                                 </MDBCol>
                                 <MDBCol>
                                 <MDBInput label="Telefone" id="form4" type="tel" name="telefone" value={formDados.telefone} onChange={capturandoDados}/>
