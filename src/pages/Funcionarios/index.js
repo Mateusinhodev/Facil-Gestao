@@ -7,7 +7,7 @@ import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
-import { doc, collection, getDocs, deleteDoc } from "firebase/firestore";
+import { doc, collection, getDocs, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
@@ -34,13 +34,16 @@ function InfoCard({ Icon, title, value }) {
     );
 }
 
-function PesquisarFuncionario() {
+function PesquisarFuncionario({termoPesquisa, setTermoPesquisa}) {
+
     return(
         <div className="search-container">
             <input 
                 type="text"
                 className="search"
                 placeholder="Pesquise aqui pelo funcionário"
+                value={termoPesquisa}
+                onChange={(e) => setTermoPesquisa(e.target.value)}
             />
 
             <button className="search-button"><Search/></button>
@@ -59,6 +62,47 @@ export default function Funcionarios() {
     const [modalShowExcluir, setModalShowExcluir] = useState(false);
     const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState(null);
 
+    const [termoPesquisa, setTermoPesquisa] = useState("");
+
+    const funcionariosFiltrados = funcionarios.filter((funcionario) => {
+        const textoPesquisa = termoPesquisa.toLowerCase();
+        return (
+            funcionario.nome.toLowerCase().includes(textoPesquisa) ||
+            funcionario.sobrenome.toLowerCase().includes(textoPesquisa) ||
+            funcionario.cargo.toLowerCase().includes(textoPesquisa) ||
+            funcionario.email.toLowerCase().includes(textoPesquisa) ||
+            funcionario.endereco.toLowerCase().includes(textoPesquisa) ||
+            funcionario.genero.toLowerCase().includes(textoPesquisa) ||
+            funcionario.telefone.toLowerCase().includes(textoPesquisa) ||
+            funcionario.cpf.toLowerCase().includes(textoPesquisa) ||
+            funcionario.salario.toString().includes(textoPesquisa) ||
+            new Date(funcionario.datadecontratacao).toLocaleDateString('pt-BR').includes(textoPesquisa) ||
+            new Date(funcionario.datadeexpiracao).toLocaleDateString('pt-BR').includes(textoPesquisa)
+        );
+    });
+
+    const folhaPagamento = funcionarios.reduce((total, funcionario) => total + Number(funcionario.salario), 0);
+    
+    // Função responsável por atualizar o banco e o estado local
+    const atualizarFuncionario = async(funcionarioAtualizado) => {
+        
+        // Atualiza no Firebase
+        await atualizarFuncionarioFirebase(funcionarioAtualizado);
+
+        // Atualiza o estado local, substituindo o funcionário antigo pelo atualizado
+        setFuncionarios((prev) => 
+            prev.map((f) =>
+                f.id === funcionarioAtualizado.id ? funcionarioAtualizado : f
+            ) 
+        );
+
+    }
+
+    const atualizarFuncionarioFirebase = async (funcionario) => {
+        const funcionarioRef = doc(db, 'funcionarios', funcionario.id);
+        await updateDoc(funcionarioRef, funcionario);
+    }
+
     useEffect (() => {
         async function ListarFuncionario() {
             const funcionariosRef = collection(db, "funcionarios")
@@ -68,11 +112,12 @@ export default function Funcionarios() {
         
                 snapshot.forEach((doc) => {
 
-                    const dataContratacao = new Date(doc.data().datadecontratacao);
-                    const dataExpiracao = new Date(doc.data().datadeexpiracao);
+                    const dataContratacao = doc.data().datadecontratacao ? new Date(doc.data().datadecontratacao) : null;
+                    const dataExpiracao = doc.data().datadeexpiracao ? new Date(doc.data().datadeexpiracao) : null;
 
-                    const diffTime = dataExpiracao - dataContratacao;
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    const diffDays = (dataContratacao && dataExpiracao) 
+                    ? Math.ceil((dataExpiracao - dataContratacao) / (1000 * 60 * 60 * 24)) 
+                    : 0;
 
                     lista.push({
                         id: doc.id,
@@ -114,10 +159,6 @@ export default function Funcionarios() {
         }
     }
 
-    
-
-    const folhaPagamento = funcionarios.reduce((total, funcionario) => total + Number(funcionario.salario), 0);
-
     return (
         <div className="dashboard-funcionários">
             <Cabecalho/>
@@ -125,7 +166,7 @@ export default function Funcionarios() {
             <div className="dashboard-info">
                 <InfoCard Icon={Users} title="Total de Funcionários" value={funcionarios.length}/>
                 <InfoCard Icon={Wallet} title="Folha de Pagamento" value={`R$ ${folhaPagamento.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}/>
-                <PesquisarFuncionario/>
+                <PesquisarFuncionario termoPesquisa={termoPesquisa} setTermoPesquisa={setTermoPesquisa}/>
             </div>
             
             <div className="d-flex justify-content-center" >
@@ -142,7 +183,7 @@ export default function Funcionarios() {
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                        {funcionarios.map((funcionario) => {
+                        {funcionariosFiltrados.map((funcionario) => {
                             return(
                                 <tr key={funcionario.id}>
                                     <td>
@@ -211,7 +252,7 @@ export default function Funcionarios() {
                     </MDBTableBody>
 
                     
-                    <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar} />
+                    <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar} onSave={atualizarFuncionario}/>
 
                     <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete} />
                 </MDBTable>

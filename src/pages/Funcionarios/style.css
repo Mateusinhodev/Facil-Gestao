@@ -20,6 +20,7 @@ body {
 
 .dashboard-funcionários {
     width: 100%;
+    min-height: 100vh;
     background-color: #BAC1CB;
 }
 
@@ -73,7 +74,7 @@ body {
     min-width: 450px;
     height: 50px;
     padding-left: 15px;
-    transition: all 5.s;
+    transition: all 0.5s;
 }
 
 .search-button {

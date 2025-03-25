@@ -11,9 +11,31 @@ import {
 } from 'mdb-react-ui-kit';
 
 import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
+import { useEffect, useState } from 'react';
 
 
-export default function EditarFuncionarios({show, onHide, funcionario}) {
+export default function EditarFuncionarios({show, onHide, funcionario, onSave}) {
+
+    const [formData, setFormData] = useState({...funcionario});
+
+    useEffect(() => {
+        if (funcionario) {
+          setFormData({ ...funcionario });
+        }
+      }, [funcionario]);
+
+    // Função para capturar os novos valores digitados
+    const handleChange = (e) => {
+        setFormData({
+        ...formData,
+        [e.target.name]: e.target.value, // Atualiza o campo correto dinamicamente
+        });
+    };
+
+    const handleSave = () => {
+        onSave(formData); // Aqui chama a função do pai, passando os dados atualizados
+        onHide(); // Fecha o modal
+    }
 
     if (!funcionario) {
         return null;  // Não renderiza o componente se funcionario for null ou undefined
@@ -56,7 +78,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.nome}
+                                        name="nome"
+                                        value={formData.nome} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -64,7 +88,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.sobrenome}
+                                        name="sobrenome"
+                                        value={formData.sobrenome} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -72,7 +98,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.cpf}
+                                        name="cpf"
+                                        value={formData.cpf} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -80,7 +108,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.telefone}
+                                        name="telefone"
+                                        value={formData.telefone} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -88,7 +118,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.endereco}
+                                        name="endereco"
+                                        value={formData.endereco} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -96,7 +128,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="email"
                                         className="form-control"
-                                        defaultValue={funcionario.email}
+                                        name="email"
+                                        value={formData.email} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -104,7 +138,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.genero}
+                                        name="genero"
+                                        value={formData.genero} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -112,7 +148,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        defaultValue={funcionario.cargo}
+                                        name="cargo"
+                                        value={formData.cargo} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -120,7 +158,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="number"
                                         className="form-control"
-                                        defaultValue={funcionario.salario}
+                                        name="salario"
+                                        value={formData.salario} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -128,7 +168,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="date"
                                         className="form-control"
-                                        defaultValue={funcionario.datadecontratacao}
+                                        name="datadecontratacao"
+                                        value={formData.datadecontratacao} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -136,7 +178,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="date"
                                         className="form-control"
-                                        defaultValue={funcionario.datadeexpiracao}
+                                        name="datadeexpiracao"
+                                        value={formData.datadeexpiracao} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -144,7 +188,9 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
                                     <input
                                         type="number"
                                         className="form-control"
-                                        defaultValue={funcionario.diasvingente}
+                                        name="diasvingentes"
+                                        value={formData.diasvingentes} 
+                                        onChange={handleChange} 
                                     />
                                 </div>
                             </MDBCardBody>
@@ -154,7 +200,7 @@ export default function EditarFuncionarios({show, onHide, funcionario}) {
             </MDBContainer>
         </Modal.Body>
         <Modal.Footer>
-          <Button>Salvar Alterações</Button>
+          <Button onClick={handleSave}>Salvar Alterações</Button>
         </Modal.Footer>
       </Modal>
     );
