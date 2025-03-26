@@ -7,7 +7,7 @@ import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
-import { doc, collection, getDocs, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, collection, getDocs, deleteDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
@@ -45,9 +45,7 @@ function PesquisarFuncionario({termoPesquisa, setTermoPesquisa}) {
                 value={termoPesquisa}
                 onChange={(e) => setTermoPesquisa(e.target.value)}
             />
-
-            <button className="search-button"><Search/></button>
-
+            <i className="fa-solid fa-magnifying-glass"></i>
         </div>
     );
 } 
@@ -136,6 +134,7 @@ export default function Funcionarios() {
                         cpf: doc.data().cpf,         
                     })
                 })
+                
                 setFuncionarios(lista);
 
                 console.log(lista);
@@ -146,6 +145,44 @@ export default function Funcionarios() {
         }
     
         ListarFuncionario();
+    }, [])
+
+    useEffect(() => {
+        async function loadFuncionarios() {
+            const unsub = onSnapshot(collection(db, "funcionarios"), (snapshot) => {
+                let lista = [];
+        
+                snapshot.forEach((doc) => {
+
+                    const dataContratacao = doc.data().datadecontratacao ? new Date(doc.data().datadecontratacao) : null;
+                    const dataExpiracao = doc.data().datadeexpiracao ? new Date(doc.data().datadeexpiracao) : null;
+
+                    const diffDays = (dataContratacao && dataExpiracao) 
+                    ? Math.ceil((dataExpiracao - dataContratacao) / (1000 * 60 * 60 * 24)) 
+                    : 0;
+
+                    lista.push({
+                        id: doc.id,
+                        nome: doc.data().nome,
+                        sobrenome: doc.data().sobrenome,
+                        cargo: doc.data().cargo,
+                        salario: doc.data().salario,
+                        genero: doc.data().genero,
+                        endereco: doc.data().endereco,
+                        email: doc.data().email,
+                        diasvingente: diffDays,
+                        datadeexpiracao: doc.data().datadeexpiracao,
+                        datadecontratacao: doc.data().datadecontratacao,
+                        avatarUrl: doc.data().avatarUrl,
+                        telefone: doc.data().telefone,   
+                        cpf: doc.data().cpf,         
+                    })
+                })
+
+                setFuncionarios(lista)
+            })
+        }
+        loadFuncionarios();
     }, [])
 
     async function handleDelete(id) {
