@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import { TrashIcon } from 'lucide-react';
+
 export default function ExcluirFuncionario ({show, onHide, id, onDelete}) {
   const handleExcluir = () => {
       if (onDelete && id) {
@@ -18,8 +20,8 @@ export default function ExcluirFuncionario ({show, onHide, id, onDelete}) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Excluir Funcionario
+          <Modal.Title id="contained-modal-title-vcenter" className="d-flex align-items-center gap-2">
+              <TrashIcon style={{ width: '24px', height: '24px' }} /> Editar Funcionário
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

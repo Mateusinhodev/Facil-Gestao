@@ -3,27 +3,14 @@ import './style.css'
 import { MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBRadio,} from "mdb-react-ui-kit";
 import UploadAvatar from "../Upload Avatar";
 
-// import React, { useEffect } from "react";
-
+import { PatternFormat } from 'react-number-format';
 
 export default function FormFuncionario({formDados, atualizarDadosForm}) {
-
-    // useEffect(() => {
-    //     // Se o FormFuncionario usar avatarUrl, certifique-se de atualizar o campo
-    // }, [formDados.avatarUrl]);
 
     const capturandoDados = (e) => {
         const {name, value} = e.target;
         atualizarDadosForm({ [name]: value });
     };
-
-    // // Função para atualizar a imagem no estado
-    // const atualizarImagem = (imageUrl) => {
-    //     atualizarDadosForm({
-    //         ...formDados,
-    //         imageUrl, // Adiciona a URL da imagem ao estado do formulário
-    //     })
-    // }
     
         return(
             <form className="form-container">
@@ -48,10 +35,28 @@ export default function FormFuncionario({formDados, atualizarDadosForm}) {
 
                             <MDBRow className="mb-4">
                                 <MDBCol>
-                                <MDBInput label="CPF" id="form3" type="number" name="cpf" value={formDados.cpf} onChange={capturandoDados}/>
+                                    <PatternFormat
+                                    label="CPF"
+                                    value={formDados.cpf}
+                                    onChange={capturandoDados}
+                                    name="cpf"
+                                    format="###.###.###-##"
+                                    mask="_"
+                                    customInput={MDBInput}
+                                    placeholder="999.999.999-99"
+                                    />
                                 </MDBCol>
                                 <MDBCol>
-                                <MDBInput label="Telefone" id="form4" type="tel" name="telefone" value={formDados.telefone} onChange={capturandoDados}/>
+                                    <PatternFormat
+                                    label="Telefone"
+                                    value={formDados.telefone}
+                                    onChange={capturandoDados}
+                                    name="telefone"
+                                    format="(##) #####-####"
+                                    mask="_"
+                                    customInput={MDBInput}
+                                    placeholder="(99) 99999-9999"
+                                    />
                                 </MDBCol>
                             </MDBRow>
 
@@ -79,18 +84,15 @@ export default function FormFuncionario({formDados, atualizarDadosForm}) {
                                 <MDBCol md="4">
                                     <MDBInput label="Salário" id="form8" type="text" wrapperClass="mb-4" name="salario" value={formDados.salario} onChange={capturandoDados}/>
                                 </MDBCol>
-
-                                <MDBCol md="4">
-                                    <MDBInput label="Data de Contratação" id="form9" type="date" wrapperClass="mb-4" name="datadecontratacao" value={formDados.datadecontratacao} onChange={capturandoDados}/>
-                                </MDBCol>
                             </MDBRow>
 
                             <MDBRow>
-                                <MDBCol md="3">
-                                    <MDBInput label="Data de Expiração" id="form10" type="date" wrapperClass="mb-4" name="datadeexpiracao" value={formDados.datadeexpiracao} onChange={capturandoDados}/>
+                                <MDBCol md="4">
+                                    <MDBInput label="Data de Contratação" id="form9" type="date" wrapperClass="mb-4" name="datadecontratacao" value={formDados.datadecontratacao} onChange={capturandoDados}/>
                                 </MDBCol>
-                                <MDBCol md="3">
-                                    <MDBInput label="Dias Vingente" id="form11" type="number" wrapperClass="mb-4" name="diasvingente" value={formDados.diasvingente} onChange={capturandoDados}/>
+
+                                <MDBCol md="4">
+                                    <MDBInput label="Data de Expiração" id="form10" type="date" wrapperClass="mb-4" name="datadeexpiracao" value={formDados.datadeexpiracao} onChange={capturandoDados}/>
                                 </MDBCol>
                             </MDBRow>
                             </MDBCardBody>

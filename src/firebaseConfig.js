@@ -1,6 +1,7 @@
 // Importa as funções necessárias do SDK do Firebase
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore'
+import { getAuth } from "firebase/auth";
 
 // Configuração do Firebase com as credenciais do seu projeto
 const firebaseConfig = {
@@ -18,5 +19,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 // Inicializa o Firestore (Banco de Dados NoSQL do Firebase)
 const db = getFirestore(firebaseApp)
 
+const auth = getAuth(firebaseApp)
+
 // Exporta a instância do banco de dados para ser usada nos outros arquivos
-export { db }
+export { db, auth }

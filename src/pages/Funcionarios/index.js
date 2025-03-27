@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-
-import AdicionarFuncionario from "../../components/Add Funcionario";
-import EditarFuncionarios from "../../components/Editar Funcionario";
 import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
@@ -10,9 +7,17 @@ import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
 import { doc, collection, getDocs, deleteDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
-import {ReactComponent as EditIcon} from '../../assets/pencil-square.svg'
-import {ReactComponent as ExcluirIcon} from '../../assets/trash.svg'
+// import {ReactComponent as ExcluirIcon} from '../../assets/trash.svg'
+import { ViewIcon } from 'lucide-react';
+import { EditIcon } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
+
+// import {ReactComponent as ViewIcon} from '../../assets/view-icon.svg'
+
+import AdicionarFuncionario from "../../components/Add Funcionario";
+import EditarFuncionarios from "../../components/Editar Funcionario";
 import ExcluirFuncionario from "../../components/Excluir Funcionario";
+import VisualizarFuncionario from "../../components/View Funcionario";
 
 
 function Cabecalho() {
@@ -53,6 +58,9 @@ function PesquisarFuncionario({termoPesquisa, setTermoPesquisa}) {
 export default function Funcionarios() {
 
     const [funcionarios, setFuncionarios] = useState([]);
+
+    const [modalShowVisualizar, setModalShowVisualizar] = useState(false)
+    const [funcionarioParaVisualizar, setFuncionarioParaVisualizar] = useState(null)
 
     const [modalShowEditar, setModalShowEditar] = useState(false);
     const [funcionarioParaEditar, setFuncionarioParaEditar] = useState(null);
@@ -254,6 +262,14 @@ export default function Funcionarios() {
                                     </td>
                                     <td className="text-center">
                                         <div>
+                                            <button className="btn-action"
+                                                onClick={() => {
+                                                    setFuncionarioParaVisualizar(funcionario);
+                                                    setModalShowVisualizar(true);
+                                                }}>
+                                                <ViewIcon/>
+                                            </button>
+
                                             {/* BUTTON PARA EDITAR FUNCIONÁRIO */}
                                             <button className="btn-action" 
                                                 onClick={() => {
@@ -262,9 +278,6 @@ export default function Funcionarios() {
                                                 }}>
                                                 <EditIcon/>
                                             </button>
-                                            
-                                            {/* ABRE O MODAL PARA EDITAR FUNCIONARIO */}
-                                            {/* <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar}/> */}
 
                                             {/* BUTTON PARA EXCLUIR FUNCIONÁRIO */}
                                             <button className="btn-action" 
@@ -272,13 +285,9 @@ export default function Funcionarios() {
                                                     setFuncionarioParaExcluir(funcionario.id); 
                                                     setModalShowExcluir(true);
                                             }}>
-                                                <ExcluirIcon/>
+                                                <TrashIcon/>
                                             </button>
 
-                                            {/* ABRE O MODAL PARA CONFIRMAR EXCLUSÃO FUNCIONARIO */}
-
-                                            {/* Passa o ID e a função onDelete via props */}
-                                            {/* <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete}/> */}
                                         </div>
                                         
                                     </td>
@@ -288,10 +297,10 @@ export default function Funcionarios() {
                         )}
                     </MDBTableBody>
 
-                    
+                    <VisualizarFuncionario show={modalShowVisualizar} onHide={() => setModalShowVisualizar(false)} funcionario={funcionarioParaVisualizar}/>
                     <EditarFuncionarios show={modalShowEditar} onHide={() => setModalShowEditar(false)} funcionario={funcionarioParaEditar} onSave={atualizarFuncionario}/>
-
                     <ExcluirFuncionario show={modalShowExcluir} onHide={() => setModalShowExcluir(false)} id={funcionarioParaExcluir} onDelete={handleDelete} />
+
                 </MDBTable>
             </div>
         </div>

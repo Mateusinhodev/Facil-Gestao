@@ -10,32 +10,9 @@ import {
     MDBCardImage,
 } from 'mdb-react-ui-kit';
 
-import { EditIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ViewIcon } from 'lucide-react';
 
-
-export default function EditarFuncionarios({show, onHide, funcionario, onSave}) {
-
-    const [formData, setFormData] = useState({...funcionario});
-
-    useEffect(() => {
-        if (funcionario) {
-          setFormData({ ...funcionario });
-        }
-      }, [funcionario]);
-
-    // Função para capturar os novos valores digitados
-    const handleChange = (e) => {
-        setFormData({
-        ...formData,
-        [e.target.name]: e.target.value, // Atualiza o campo correto dinamicamente
-        });
-    };
-
-    const handleSave = () => {
-        onSave(formData); // Aqui chama a função do pai, passando os dados atualizados
-        onHide(); // Fecha o modal
-    }
+export default function VisualizarFuncionario({show, onHide, funcionario}) {
 
     if (!funcionario) {
         return null;  // Não renderiza o componente se funcionario for null ou undefined
@@ -51,7 +28,7 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
       >
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter" className="d-flex align-items-center gap-2">
-                <EditIcon style={{ width: '24px', height: '24px' }} /> Editar Funcionário
+                <ViewIcon style={{ width: '24px', height: '24px' }} /> Visualizar Funcionario
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -79,8 +56,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="nome"
-                                        value={formData.nome} 
-                                        onChange={handleChange} 
+                                        value={funcionario.nome} 
+                                        disabled
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -89,8 +66,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="sobrenome"
-                                        value={formData.sobrenome} 
-                                        onChange={handleChange} 
+                                        value={funcionario.sobrenome}
+                                        disabled  
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -99,8 +76,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="cpf"
-                                        value={formData.cpf} 
-                                        onChange={handleChange} 
+                                        value={funcionario.cpf} 
+                                        disabled 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -109,8 +86,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="telefone"
-                                        value={formData.telefone} 
-                                        onChange={handleChange} 
+                                        value={funcionario.telefone} 
+                                        disabled 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -119,8 +96,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="endereco"
-                                        value={formData.endereco} 
-                                        onChange={handleChange} 
+                                        value={funcionario.endereco}  
+                                        disabled
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -129,8 +106,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="email"
                                         className="form-control"
                                         name="email"
-                                        value={formData.email} 
-                                        onChange={handleChange} 
+                                        value={funcionario.email}  
+                                        disabled
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -139,8 +116,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="genero"
-                                        value={formData.genero} 
-                                        onChange={handleChange} 
+                                        value={funcionario.genero}  
+                                        disabled
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -149,8 +126,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="text"
                                         className="form-control"
                                         name="cargo"
-                                        value={formData.cargo} 
-                                        onChange={handleChange} 
+                                        value={funcionario.cargo}  
+                                        disabled
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -159,8 +136,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="number"
                                         className="form-control"
                                         name="salario"
-                                        value={formData.salario} 
-                                        onChange={handleChange} 
+                                        value={funcionario.salario}  
+                                        disabled
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -169,8 +146,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="date"
                                         className="form-control"
                                         name="datadecontratacao"
-                                        value={formData.datadecontratacao} 
-                                        onChange={handleChange} 
+                                        value={funcionario.datadecontratacao} 
+                                        disabled 
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -179,8 +156,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="date"
                                         className="form-control"
                                         name="datadeexpiracao"
-                                        value={formData.datadeexpiracao} 
-                                        onChange={handleChange} 
+                                        value={funcionario.datadeexpiracao}
+                                        disabled  
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -189,8 +166,8 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         type="number"
                                         className="form-control"
                                         name="diasvingentes"
-                                        value={formData.diasvingentes} 
-                                        onChange={handleChange} 
+                                        value={funcionario.diasvingentes}  
+                                        disabled
                                     />
                                 </div>
                             </MDBCardBody>
@@ -199,9 +176,6 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                 </MDBRow>
             </MDBContainer>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleSave}>Salvar Alterações</Button>
-        </Modal.Footer>
       </Modal>
     );
 }

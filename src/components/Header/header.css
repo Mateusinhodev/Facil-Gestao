@@ -18,6 +18,10 @@ header {
     margin: 0 20px;
 }
 
+.logo img {
+    width: 80px;
+}
+
 .menu {
     display: flex;
     margin: auto;

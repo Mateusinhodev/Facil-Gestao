@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Funcionarios from "./pages/Funcionarios";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
+import Cadastro from "./pages/Cadastrar";
 
 const AppRoutes = () => {
     return(
@@ -13,6 +14,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/funcionarios" element={<Funcionarios/>} />
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/cadastro" element={<Cadastro/>}/>
                 <Route path="/erro" element={<Error/>}/>
             </Routes>
         </BrowserRouter>
