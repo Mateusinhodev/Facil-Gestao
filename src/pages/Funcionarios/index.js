@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
-import { Users, Wallet, Search } from "lucide-react"; // Biblioteca de ícones
-import { doc, collection, getDocs, deleteDoc, updateDoc, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+import { Users, Wallet } from "lucide-react"; // Biblioteca de ícones
+import { doc, collection, getDocs, deleteDoc, updateDoc, query, where, onSnapshot} from "firebase/firestore";
+import { db, auth } from "../../firebaseConfig";
+import { getAuth, onAuthStateChanged } from "firebase/auth"; // Importa o Firebase Authentication
+
 
 // import {ReactComponent as ExcluirIcon} from '../../assets/trash.svg'
 import { ViewIcon } from 'lucide-react';
@@ -68,6 +70,9 @@ export default function Funcionarios() {
     const [modalShowExcluir, setModalShowExcluir] = useState(false);
     const [funcionarioParaExcluir, setFuncionarioParaExcluir] = useState(null);
 
+    const [loading, setLoading] = useState(true); // Adicionando um estado de loading
+    const [error, setError] = useState(null); // Para capturar erros
+
     const [termoPesquisa, setTermoPesquisa] = useState("");
 
     const funcionariosFiltrados = funcionarios.filter((funcionario) => {
@@ -109,89 +114,90 @@ export default function Funcionarios() {
         await updateDoc(funcionarioRef, funcionario);
     }
 
-    useEffect (() => {
-        async function ListarFuncionario() {
-            const funcionariosRef = collection(db, "funcionarios")
-            await getDocs(funcionariosRef)
-            .then((snapshot) => {
-                let lista = [];
-        
-                snapshot.forEach((doc) => {
-
-                    const dataContratacao = doc.data().datadecontratacao ? new Date(doc.data().datadecontratacao) : null;
-                    const dataExpiracao = doc.data().datadeexpiracao ? new Date(doc.data().datadeexpiracao) : null;
-
-                    const diffDays = (dataContratacao && dataExpiracao) 
-                    ? Math.ceil((dataExpiracao - dataContratacao) / (1000 * 60 * 60 * 24)) 
-                    : 0;
-
-                    lista.push({
-                        id: doc.id,
-                        nome: doc.data().nome,
-                        sobrenome: doc.data().sobrenome,
-                        cargo: doc.data().cargo,
-                        salario: doc.data().salario,
-                        genero: doc.data().genero,
-                        endereco: doc.data().endereco,
-                        email: doc.data().email,
-                        diasvingente: diffDays,
-                        datadeexpiracao: doc.data().datadeexpiracao,
-                        datadecontratacao: doc.data().datadecontratacao,
-                        avatarUrl: doc.data().avatarUrl,
-                        telefone: doc.data().telefone,   
-                        cpf: doc.data().cpf,         
-                    })
-                })
-                
-                setFuncionarios(lista);
-
-                console.log(lista);
-            })
-            .catch((error) => {
-                console.log("ERRO AO LISTAR FUNCIONÁRIOS", error);
-            })
-        }
-    
-        ListarFuncionario();
-    }, [])
-
     useEffect(() => {
-        async function loadFuncionarios() {
-            const unsub = onSnapshot(collection(db, "funcionarios"), (snapshot) => {
-                let lista = [];
-        
-                snapshot.forEach((doc) => {
+        let isMounted = true;
+        let unsubscribe = null;
 
-                    const dataContratacao = doc.data().datadecontratacao ? new Date(doc.data().datadecontratacao) : null;
-                    const dataExpiracao = doc.data().datadeexpiracao ? new Date(doc.data().datadeexpiracao) : null;
+        const fetchData = async () => {
+            unsubscribe = onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.warn("Nenhum usuário autenticado.");
+                    if (isMounted) {
+                        setError("Usuário não autenticado!");
+                        setFuncionarios([]);
+                        setLoading(false);
+                    }
+                    return;
+                }
 
-                    const diffDays = (dataContratacao && dataExpiracao) 
-                    ? Math.ceil((dataExpiracao - dataContratacao) / (1000 * 60 * 60 * 24)) 
-                    : 0;
+                console.log("Usuário autenticado:", user.uid);
 
-                    lista.push({
-                        id: doc.id,
-                        nome: doc.data().nome,
-                        sobrenome: doc.data().sobrenome,
-                        cargo: doc.data().cargo,
-                        salario: doc.data().salario,
-                        genero: doc.data().genero,
-                        endereco: doc.data().endereco,
-                        email: doc.data().email,
-                        diasvingente: diffDays,
-                        datadeexpiracao: doc.data().datadeexpiracao,
-                        datadecontratacao: doc.data().datadecontratacao,
-                        avatarUrl: doc.data().avatarUrl,
-                        telefone: doc.data().telefone,   
-                        cpf: doc.data().cpf,         
-                    })
-                })
+                const funcionariosRef = collection(db, "funcionarios");
+                const q = query(funcionariosRef, where("empresaId", "==", user.uid));
 
-                setFuncionarios(lista)
-            })
-        }
-        loadFuncionarios();
-    }, [])
+                // Criando um listener em tempo real
+                unsubscribe = onSnapshot(q, (snapshot) => {
+                    if (snapshot.empty) {
+                        console.warn("Nenhum funcionário encontrado para este usuário.");
+                        if (isMounted) {
+                            setFuncionarios([]);
+                            setLoading(false);
+                        }
+                        return;
+                    }
+
+                    let lista = [];
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        console.log("Funcionário atualizado:", data);
+
+                        const dataContratacao = data.datadecontratacao ? new Date(data.datadecontratacao) : null;
+                        const dataExpiracao = data.datadeexpiracao ? new Date(data.datadeexpiracao) : null;
+
+                        const diffDays = dataContratacao && dataExpiracao
+                            ? Math.ceil((dataExpiracao.getTime() - dataContratacao.getTime()) / (1000 * 60 * 60 * 24))
+                            : 0;
+
+                        lista.push({
+                            id: doc.id,
+                            nome: data.nome,
+                            sobrenome: data.sobrenome,
+                            cargo: data.cargo,
+                            salario: data.salario,
+                            genero: data.genero,
+                            endereco: data.endereco,
+                            email: data.email,
+                            diasvingente: diffDays,
+                            datadeexpiracao: dataExpiracao,
+                            datadecontratacao: dataContratacao,
+                            avatarUrl: data.avatarUrl,
+                            telefone: data.telefone,
+                            cpf: data.cpf,
+                        });
+                    });
+
+                    if (isMounted) {
+                        setFuncionarios(lista);
+                        setLoading(false);
+                    }
+                }, (error) => {
+                    console.error("Erro ao listar funcionários:", error);
+                    if (isMounted) {
+                        setError("Erro ao listar funcionários!");
+                        setLoading(false);
+                    }
+                });
+            });
+        };
+
+        fetchData();
+
+        return () => {
+            isMounted = false;
+            if (unsubscribe) unsubscribe();
+        };
+    }, []);
+
 
     async function handleDelete(id) {
         try {
@@ -204,7 +210,17 @@ export default function Funcionarios() {
         }
     }
 
+    if (loading) {
+        return <div>Carregando...</div>; // Exibe enquanto está carregando
+    }
+
+    if (error) {
+        return <div>{error}</div>; // Exibe um erro caso ocorra
+    }
+
     return (
+        
+
         <div className="dashboard-funcionários">
             <Cabecalho/>
 
@@ -215,16 +231,16 @@ export default function Funcionarios() {
             </div>
             
             <div className="d-flex justify-content-center" >
-                <MDBTable align='middle' className="mt-3 m-5 rounded-3">
+                <MDBTable align='middle' className="mt-3 m-3 rounded-3">
                     <MDBTableHead>
                         <tr>
                         <th scope='col'>Nome</th>
                         <th scope='col'>Cargo</th>
-                        <th scope='col' className="text-center">Salário</th>
-                        <th scope='col' className="text-center">Data de Contratacao</th>
-                        <th scope='col' className="text-center">Data de Expiracao</th>
-                        <th scope='col' className="text-center">Dias Vingentes</th>
-                        <th scope='col' className="text-center">Ações</th>
+                        <th scope='col' className="centered-column">Salário</th>
+                        <th scope='col' className="centered-column">Data de Contratacao</th>
+                        <th scope='col' className="centered-column">Data de Expiracao</th>
+                        <th scope='col' className="centered-column">Dias Vingentes</th>
+                        <th scope='col' className="centered-column">Ações</th>
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
@@ -248,19 +264,19 @@ export default function Funcionarios() {
                                     <td>
                                         <p className='fw-normal mb-1'>{funcionario.cargo}</p>
                                     </td>
-                                    <td>
-                                        <p className="text-center">R$ {Number(funcionario.salario).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                                    <td className="centered-column">
+                                        <p>R$ {Number(funcionario.salario).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                                     </td>
-                                    <td>
-                                        <p className="text-center">{new Date(funcionario.datadecontratacao).toLocaleDateString('pt-BR')}</p>
+                                    <td className="centered-column">
+                                        <p>{new Date(funcionario.datadecontratacao).toLocaleDateString('pt-BR')}</p>
                                     </td>
-                                    <td>
-                                        <p className="text-center">{new Date(funcionario.datadeexpiracao).toLocaleDateString('pt-BR')}</p>
+                                    <td className="centered-column">
+                                        <p>{new Date(funcionario.datadeexpiracao).toLocaleDateString('pt-BR')}</p>
                                     </td>
-                                    <td>
-                                        <p className="text-center">{funcionario.diasvingente} dias</p>
+                                    <td className="centered-column">
+                                        <p>{funcionario.diasvingente} dias</p>
                                     </td>
-                                    <td className="text-center">
+                                    <td className="centered-column">
                                         <div>
                                             <button className="btn-action"
                                                 onClick={() => {

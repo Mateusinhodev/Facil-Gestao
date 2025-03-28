@@ -1,7 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 .cabecalho-page {
@@ -64,7 +67,7 @@ body {
 
 .search-container {
     position: relative;
-    min-width: 318px;
+    min-width: 940px;
 }
 
 .input-wrapper {
@@ -93,4 +96,13 @@ body {
 .btn-action {
     background-color: transparent;
     border: none;
+}
+
+/* table {
+    table-layout: fixed;
+    width: 100%;
+} */
+
+.centered-column {
+    text-align: center;
 }

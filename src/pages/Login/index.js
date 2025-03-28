@@ -1,22 +1,67 @@
-import React from 'react';
+// import React, { useEffect } from 'react';
+import './style.css'
 import {
-  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
   MDBInput
 } from 'mdb-react-ui-kit';
 
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "../../firebaseConfig";
+
+import { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom'; // Importe o useNavigate
+
 import Logo from "../../assets/logo.png"
 
 export default function Login() {
+  // Estados para armazenar o email e a senha
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  // Hook do react-router-dom para redirecionamento
+  const navigate = useNavigate();
+
+  async function logarUsuario() {
+    await signInWithEmailAndPassword(auth, email, senha)
+    .then((value) => {
+      alert("Logado com sucesso");
+
+      // Redireciona para a página de Funcionários
+      navigate('/funcionarios'); 
+
+      setEmail('');
+      setSenha('');
+    })
+    .catch((error) => {
+      alert("Erro ao Logar");
+    })
+  }
+
+  // useEffect(() => {
+  //   async function checkLogin() {
+  //     onAuthStateChanged(auth, (user) => {
+  //       if(user) {
+  //           // se tem um usuário logado ele entra aqui...
+  //       } else {
+  //           // não possui nenhum user logado
+  //           setUserId(false);
+  //       }
+  //     })
+  //   }
+
+  //   checkLogin()
+  // }, [])
+
   return (
-    <MDBContainer className="my-5 gradient-form">
-      <MDBRow>
+    <MDBContainer fluid className="gradient-form d-flex align-items-center justify-content-center" style={{ height: "100vh" }}>
+      <MDBRow className="w-100 h-100 d-flex align-items-center">
 
         {/* Seção de Login */}
-        <MDBCol md="6" className="mb-5">
-          <div className="d-flex flex-column ms-5">
+        <MDBCol md="6" className="d-flex align-items-center justify-content-center">
+          <div className="d-flex flex-column w-75">
 
             <div className="text-center">
               <img 
@@ -29,11 +74,11 @@ export default function Login() {
 
             <p>Por favor, faça login na sua conta</p>
 
-            <MDBInput wrapperClass="mb-4" label="Email" id="form1" type="email" aria-label="Email"/>
-            <MDBInput wrapperClass="mb-4" label="Senha" id="form2" type="password" aria-label="Senha"/>
+            <MDBInput wrapperClass="mb-4" label="Email" id="form1" type="email" aria-label="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <MDBInput wrapperClass="mb-4" label="Senha" id="form2" type="password" aria-label="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn className="mb-4 w-100 gradient-custom-2">Entrar</MDBBtn>
+              <button className="button-entrar" onClick={logarUsuario}>Entrar</button>
               <a className="text-muted" href="#!">Esqueceu sua senha?</a>
             </div>
 
@@ -48,15 +93,13 @@ export default function Login() {
         </MDBCol>
 
         {/* Seção Informativa */}
-        <MDBCol md="6" className="mb-5 d-flex align-items-center" style={{ minHeight: '100vh' }}>
-          <div className="d-flex flex-column justify-content-center w-100 h-100 p-4"
-               style={{ backgroundColor: '#0E97FA', color: 'white', borderRadius: '10px' }}>
-            <div className="px-3 py-4 p-md-5 mx-md-4">
-              <h4 className="mb-4">Facilidade e eficiência na gestão empresarial</h4>
-              <p className="small mb-0">
+        <MDBCol md="6" className="d-flex align-items-center justify-content-center"
+                style={{ height: '100vh', backgroundColor: '#0E97FA', color: 'white', borderRadius: '10px' }}>
+          <div className="px-3 py-4 p-md-5 mx-md-4 text-center">
+            <h4 className="mb-4">Facilidade e eficiência na gestão empresarial</h4>
+            <p className="small mb-0">
               O Fácil Gestão é a solução ideal para empresas que buscam eficiência e organização no controle de funcionários. Com uma interface intuitiva e funcionalidades completas, ele permite gerenciar a folha de pagamento, listar colaboradores, acompanhar a quantidade de funcionários e muito mais. Simplifique a administração do seu negócio e tenha mais tempo para focar no que realmente importa: o crescimento da sua empresa.
-              </p>
-            </div>
+            </p>
           </div>
         </MDBCol>
 
@@ -64,4 +107,3 @@ export default function Login() {
     </MDBContainer>
   );
 }
-

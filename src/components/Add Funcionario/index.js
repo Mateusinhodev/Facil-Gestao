@@ -10,6 +10,8 @@ import Modal from 'react-bootstrap/Modal';
 
 import { db } from "../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // Importação do Firebase Auth
+
 
 const IconAdd = () => {
     return (
@@ -43,32 +45,39 @@ export default function AdicionarFuncionario() {
         setFormDados(prev => ({...prev, ...newDados}));
     };
 
-    const enviarDados = async () => {
-
-        // Verificar se avatarUrl está presente
-        if (!formDados.avatarUrl) {
-            alert("Por favor, adicione uma imagem de avatar.");
+    const enviarDados = async (event) => {
+        event.preventDefault(); // Evita o recarregamento da página
+    
+        const auth = getAuth();
+        const user = auth.currentUser;
+        
+        if (!user) {
+            alert("Usuário não autenticado! Faça login novamente.");
             return;
         }
-
-        console.log(formDados); // Verifique os dados antes de enviar
-
+    
+        // if (!formDados.avatarUrl) {
+        //     alert("Por favor, adicione uma imagem de avatar.");
+        //     return;
+        // }
+    
+        const funcionarioComEmpresaId = { ...formDados, empresaId: user.uid };
+    
         try {
-            await addDoc(collection(db, "funcionarios"), formDados);
-            console.log("Funcionário adicionado com sucesso!", formDados);
-
+            await addDoc(collection(db, "funcionarios"), funcionarioComEmpresaId);
+            alert("Funcionário adicionado com sucesso!");
+    
             setFormDados({
                 nome: '', sobrenome: '', endereco: '', email: '', telefone: '',
                 genero: '', cargo: '', salario: '', datadecontratacao: '',
                 datadeexpiracao: '', diasvingente: '', avatarUrl: '', cpf: ''
-            })
-
-            setLgShow(false); // Fecha o modal após o envio
+            });
+    
+            setLgShow(false);
         } catch (error) {
             console.log("Erro ao enviar dados: ", error);
         }
-        
-    }
+    };
 
     return (
         <>

@@ -1,0 +1,50 @@
+/* Estilo da div principal */
+.text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem; /* Espaço entre os elementos */
+  }
+  
+  .pt-1 {
+    padding-top: 0.5rem; /* Pequeno padding no topo */
+  }
+  
+  .pb-1 {
+    padding-bottom: 0.5rem; /* Pequeno padding na parte inferior */
+  }
+  
+  .mb-5 {
+    margin-bottom: 3rem; /* Margin inferior maior para separar da próxima seção */
+  }
+  
+  /* Estilo do botão "Entrar" */
+  .button-entrar {
+    background-color: #0E97FA; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    font-size: 1.1rem; /* Aumenta um pouco o tamanho da fonte */
+    padding: 0.75rem 2rem; /* Padding confortável para o botão */
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transição suave ao passar o mouse */
+  }
+  
+  .button-entrar:hover {
+    background-color: #085d8c; /* Cor mais escura quando o botão é pressionado */
+    transform: scale(1.05); /* Leve aumento de tamanho ao passar o mouse */
+  }
+  
+  /* Estilo do link "Esqueceu sua senha?" */
+  .text-muted {
+    color: #6c757d; /* Cor mais suave para o texto */
+    text-decoration: none; /* Remove o sublinhado do link */
+    font-size: 0.9rem; /* Reduz um pouco o tamanho da fonte */
+    margin-top: 0.5rem;
+  }
+  
+  .text-muted:hover {
+    color: #0E97FA; /* Cor azul ao passar o mouse sobre o link */
+    text-decoration: underline; /* Adiciona o sublinhado quando o link é clicado */
+  }

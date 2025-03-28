@@ -1,51 +1,42 @@
-// ConstructionPage.js
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const ConstructionPage = () => {
-  return (
-    <div style={styles.container}>
-      <div style={styles.content}>
-        <h1 style={styles.heading}>Módulo em Construção</h1>
-        <p style={styles.text}>Estamos trabalhando nisso, volte mais tarde!</p>
-      </div>
-    </div>
-  );
+const Error404 = () => {
+    return (
+        <div style={styles.container}>
+            <h1 style={styles.title}>404</h1>
+            <p style={styles.message}>Oops! Página não encontrada.</p>
+            <Link to="/" style={styles.button}>Voltar para a Página Inicial</Link>
+        </div>
+    );
 };
 
+// Estilos inline para a página
 const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    backgroundColor: '#f0f0f0',
-    textAlign: 'center',
-  },
-  content: {
-    padding: '20px',
-    backgroundColor: '#fff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    maxWidth: '600px',
-    width: '100%',
-  },
-  heading: {
-    fontSize: '36px',
-    marginBottom: '10px',
-    color: '#333',
-  },
-  text: {
-    fontSize: '18px',
-    color: '#666',
-  },
-  imageContainer: {
-    marginTop: '20px',
-  },
-  image: {
-    maxWidth: '100%',
-    height: 'auto',
-    borderRadius: '8px',
-  },
+    container: {
+        textAlign: "center",
+        padding: "50px",
+        fontFamily: "Arial, sans-serif",
+    },
+    title: {
+        fontSize: "80px",
+        fontWeight: "bold",
+        color: "#ff4444",
+        margin: "0",
+    },
+    message: {
+        fontSize: "20px",
+        color: "#555",
+        marginBottom: "20px",
+    },
+    button: {
+        padding: "10px 20px",
+        fontSize: "18px",
+        color: "#fff",
+        backgroundColor: "#007bff",
+        textDecoration: "none",
+        borderRadius: "5px",
+    },
 };
 
-export default ConstructionPage;
+export default Error404;
