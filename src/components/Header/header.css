@@ -51,7 +51,7 @@ header {
     border-bottom: 4px solid #0E97FA;
 }
 
-.icones {
+.logout-button {
     display: flex;
     align-items: center;
     margin: 0 20px;
@@ -60,4 +60,31 @@ header {
 .icone-notifica, .icone-user {
     width: 40px;
     margin: 0 10px;
+}
+
+.user-logado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 20px;
+}
+
+.logout-button {
+    background-color: #dc3545; /* Vermelho elegante */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+    background-color: #bb2d3b; /* Tom mais escuro ao passar o mouse */
+}
+
+.logout-button:active {
+    background-color: #a71d2a; /* Efeito de clique */
 }

@@ -231,7 +231,7 @@ export default function Funcionarios() {
             </div>
             
             <div className="d-flex justify-content-center" >
-                <MDBTable align='middle' className="mt-3 m-3 rounded-3">
+                <MDBTable align='middle' className="mt-3 m-5 rounded-3">
                     <MDBTableHead>
                         <tr>
                         <th scope='col'>Nome</th>

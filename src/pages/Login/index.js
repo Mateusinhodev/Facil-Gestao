@@ -96,7 +96,7 @@ export default function Login() {
         <MDBCol md="6" className="d-flex align-items-center justify-content-center"
                 style={{ height: '100vh', backgroundColor: '#0E97FA', color: 'white', borderRadius: '10px' }}>
           <div className="px-3 py-4 p-md-5 mx-md-4 text-center">
-            <h4 className="mb-4">Facilidade e eficiência na gestão empresarial</h4>
+            <h3 className="mb-4">Facilidade e eficiência na gestão empresarial</h3>
             <p className="small mb-0">
               O Fácil Gestão é a solução ideal para empresas que buscam eficiência e organização no controle de funcionários. Com uma interface intuitiva e funcionalidades completas, ele permite gerenciar a folha de pagamento, listar colaboradores, acompanhar a quantidade de funcionários e muito mais. Simplifique a administração do seu negócio e tenha mais tempo para focar no que realmente importa: o crescimento da sua empresa.
             </p>
