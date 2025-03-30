@@ -7,7 +7,6 @@ import {
     MDBRow,
     MDBCard,
     MDBCardBody,
-    MDBCardImage,
 } from 'mdb-react-ui-kit';
 
 import { EditIcon } from 'lucide-react';
@@ -20,9 +19,18 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
 
     useEffect(() => {
         if (funcionario) {
-          setFormData({ ...funcionario });
+            setFormData({
+                ...funcionario,
+                datadecontratacao: funcionario.datadecontratacao
+                    ? new Date(funcionario.datadecontratacao).toISOString().split("T")[0] // Converte para formato correto
+                    : new Date().toISOString().split("T")[0], // Se for nulo, usa a data atual
+    
+                datadeexpiracao: funcionario.datadeexpiracao
+                    ? new Date(funcionario.datadeexpiracao).toISOString().split("T")[0]
+                    : "" // Se não existir, mantém vazio
+            });
         }
-      }, [funcionario]);
+    }, [funcionario]);
 
     // Função para capturar os novos valores digitados
     const handleChange = (e) => {
@@ -60,7 +68,7 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                     <MDBCol lg="10">
                         <MDBCard className="shadow-sm border-0 p-4">
                             <MDBCardBody>
-                                <div className="text-center mb-4">
+                                {/* <div className="text-center mb-4">
                                     <MDBCardImage
                                         src={funcionario.avatarUrl}
                                         alt="avatar"
@@ -71,7 +79,7 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                     <div>
                                         <Button variant="outline-primary" size="sm">Alterar Foto</Button>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="mb-3">
                                     <label className="form-label fw-bold">Nome</label>
@@ -183,16 +191,16 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
                                         onChange={handleChange} 
                                     />
                                 </div>
-                                <div className="mb-3">
+                                {/* <div className="mb-3">
                                     <label className="form-label fw-bold">Dias Vigentes</label>
                                     <input
                                         type="number"
                                         className="form-control"
                                         name="diasvingentes"
-                                        value={formData.diasvingentes} 
+                                        value={formData.diasvingente} 
                                         onChange={handleChange} 
                                     />
-                                </div>
+                                </div> */}
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>

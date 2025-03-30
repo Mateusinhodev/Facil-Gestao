@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
-import userIcon from '../../assets/user.png';
+// import userIcon from '../../assets/user.png';
 import "./header.css";
 
 // Componente de Logout

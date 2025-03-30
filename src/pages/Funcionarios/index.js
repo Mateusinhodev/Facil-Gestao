@@ -4,9 +4,9 @@ import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import { Users, Wallet } from "lucide-react"; // Biblioteca de ícones
-import { doc, collection, getDocs, deleteDoc, updateDoc, query, where, onSnapshot} from "firebase/firestore";
+import { doc, collection, deleteDoc, updateDoc, query, where, onSnapshot} from "firebase/firestore";
 import { db, auth } from "../../firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth"; // Importa o Firebase Authentication
+import { onAuthStateChanged } from "firebase/auth"; // Importa o Firebase Authentication
 
 
 // import {ReactComponent as ExcluirIcon} from '../../assets/trash.svg'
