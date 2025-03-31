@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom'; // Importe o useNavigate
 
-import Logo from "../../assets/logo.png"
+import { toast } from 'react-toastify';
 
 export default function Login() {
   // Estados para armazenar o email e a senha
@@ -27,8 +27,8 @@ export default function Login() {
   async function logarUsuario() {
     await signInWithEmailAndPassword(auth, email, senha)
     .then((value) => {
-      alert("Logado com sucesso");
-
+      // alert("Logado com sucesso");
+      toast.success("Login realizado com sucesso!")
       // Redireciona para a página de Funcionários
       navigate('/funcionarios'); 
 
@@ -36,7 +36,8 @@ export default function Login() {
       setSenha('');
     })
     .catch((error) => {
-      alert("Erro ao Logar");
+      // alert("Erro ao Logar");
+      toast.error("Erro ao fazer login!")
     })
   }
 
@@ -65,7 +66,7 @@ export default function Login() {
 
             <div className="text-center">
               <img 
-                src={Logo}
+                src="https://i.im.ge/2025/03/31/p6ca26.logo-facilgestao.png"
                 style={{ width: '185px' }} 
                 alt="Lotus Team Logo" 
               />

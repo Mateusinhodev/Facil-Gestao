@@ -11,6 +11,7 @@ import {
 
 import { EditIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 
 export default function EditarFuncionarios({show, onHide, funcionario, onSave}) {
@@ -42,6 +43,7 @@ export default function EditarFuncionarios({show, onHide, funcionario, onSave}) 
 
     const handleSave = () => {
         onSave(formData); // Aqui chama a função do pai, passando os dados atualizados
+        toast.success("Funcionário editado com sucesso!");
         onHide(); // Fecha o modal
     }
 

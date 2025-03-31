@@ -12,9 +12,10 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { db, auth } from "../../firebaseConfig";
 import { doc, setDoc } from 'firebase/firestore'; // Importe as funções do Firestore
 
-// import UploadAvatar from "../../components/Upload Avatar";
+import { toast } from 'react-toastify';
 
-import Logo from "../../assets/logo.png";
+
+// import UploadAvatar from "../../components/Upload Avatar";
 
 export default function Cadastro() {
 
@@ -36,7 +37,8 @@ export default function Cadastro() {
         // logoUrl: logoUrl,
       });
 
-      alert("Cadastrado com sucesso!")
+      // alert("Cadastrado com sucesso!")
+      toast.success("Cadastro realizado com sucesso!")
       setEmail('')
       setSenha('')
       setNomeEmpresa('');
@@ -44,9 +46,9 @@ export default function Cadastro() {
     })
     .catch((error) => {
       if(error.code === 'auth/weak-password')  {
-        alert("Senha muito fraca!")
+        toast.warn("Senha muito fraca!")
       } else if(error.code === 'auth/email-already-in-use') {
-        alert("Email já existe!")
+        toast.warn("Email já existe!")
       }
       
     })
@@ -61,7 +63,7 @@ export default function Cadastro() {
           <div className="d-flex flex-column ms-5 w-75">
             <div className="text-center">
               <img 
-                src={Logo}
+                src="https://i.im.ge/2025/03/31/p6ca26.logo-facilgestao.png"
                 style={{ width: '185px' }} 
                 alt="Lotus Team Logo" 
               />

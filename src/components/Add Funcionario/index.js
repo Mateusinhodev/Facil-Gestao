@@ -11,6 +11,7 @@ import Modal from 'react-bootstrap/Modal';
 import { db } from "../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; // Importação do Firebase Auth
+import { toast } from "react-toastify";
 
 
 const IconAdd = () => {
@@ -65,7 +66,7 @@ export default function AdicionarFuncionario() {
     
         try {
             await addDoc(collection(db, "funcionarios"), funcionarioComEmpresaId);
-            alert("Funcionário adicionado com sucesso!");
+            toast.success("Funcionário adicionado com sucesso!");
     
             setFormDados({
                 nome: '', sobrenome: '', endereco: '', email: '', telefone: '',

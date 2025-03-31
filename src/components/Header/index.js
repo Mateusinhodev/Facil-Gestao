@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 // import userIcon from '../../assets/user.png';
 import "./header.css";
+import { toast } from "react-toastify";
 
 // Componente de Logout
 function Logout() {
@@ -12,7 +13,7 @@ function Logout() {
     const handleLogout = () => {
         signOut(auth)
             .then(() => navigate("/login"))
-            .catch((error) => console.error("Erro ao deslogar:", error));
+            .catch((error) => toast.error("Erro ao deslogar:", error));
     };
 
     return (
@@ -40,7 +41,7 @@ export default function Header() {
     return (
         <header>
             <div className="logo">
-                <img className="logo-img" src={require('../../assets/logo.png')} alt='Logo da Fácil Gestão'/>
+                <img className="logo-img" src="https://i.im.ge/2025/03/31/p6ca26.logo-facilgestao.png" alt='Logo da Fácil Gestão'/>
                 <h1 className="logo-titulo">FácilGestão</h1>
             </div>
             <Menu />

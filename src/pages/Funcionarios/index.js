@@ -21,6 +21,7 @@ import EditarFuncionarios from "../../components/Editar Funcionario";
 import ExcluirFuncionario from "../../components/Excluir Funcionario";
 import VisualizarFuncionario from "../../components/View Funcionario";
 
+import { toast } from "react-toastify";
 
 function Cabecalho() {
     return (
@@ -181,7 +182,7 @@ export default function Funcionarios() {
                         setLoading(false);
                     }
                 }, (error) => {
-                    console.error("Erro ao listar funcionários:", error);
+                    toast.error("Erro ao listar funcionários:", error);
                     if (isMounted) {
                         setError("Erro ao listar funcionários!");
                         setLoading(false);
@@ -204,9 +205,9 @@ export default function Funcionarios() {
             await deleteDoc(doc(db, "funcionarios", id));
             // Atualizar o estado local removendo o funcionário
             setFuncionarios(funcionarios.filter(funcionario => funcionario.id !== id));
-            alert("Funcionario excluído com sucesso!");
+            toast.success("Funcionario excluído com sucesso!");
         } catch (error) {
-            console.log("Erro ao excluir funcionário", error);
+            toast.error("Erro ao excluir funcionário", error);
         }
     }
 
