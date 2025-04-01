@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Fácil Gestão
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Fácil Gestão é um sistema SaaS desenvolvido com **React, JavaScript e Firebase**, projetado para facilitar o gerenciamento de funcionários em empresas de diversos segmentos. O sistema oferece um **CRUD completo**, além de cálculos automáticos para melhor controle administrativo.
 
-## Available Scripts
+## 📌 Funcionalidades Principais
 
-In the project directory, you can run:
+- **Cadastro e Login:** Empresas podem se registrar e acessar o sistema com e-mail e senha, utilizando **Firebase Authentication** para segurança.
+- **Gerenciamento de Funcionários:** Permite **adicionar, visualizar, editar e excluir** funcionários.
+- **Cards Informativo:** Exibe o **total de funcionários cadastrados** e o **cálculo da folha de pagamento**.
+- **Pesquisa Rápida:** Localize funcionários facilmente através de um campo de busca.
+- **Cálculo de Período Vigente:** Baseado na **data de contratação e expiração do vínculo**.
+- **Sistema de Alertas:** Notificações para ações bem-sucedidas ou falhas com **React Toastify**.
+- **Página de Erro 404:** Renderizada caso o usuário tente acessar uma página inexistente.
+- **Módulos em Construção:** Seções como **Projetos, Relatórios e Finanças**.
 
-### `npm start`
+## 🖥️ Estrutura do Sistema
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 📄 Páginas Principais
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Login & Cadastro:** Acesso ao sistema mediante credenciais da empresa.
+- **Funcionários:** Listagem e gerenciamento completo dos funcionários.
+- **Construction Page:** Página exibida para as páginas que ainda estão em construção.
+- **Error 404:** Página exibida caso o usuário tente acessar uma rota inválida.
 
-### `npm test`
+### 🛠 Componentes Principais
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 📌 Cadastro e Visualização
+- **Adicionar Funcionário:** Modal que permite inserir um novo funcionário.
+- **Formulário Funcionário:** Captura e valida os dados do funcionário.
+- **Upload de Avatar:** Integração com **IMGUR API** para armazenar fotos de perfil.
+- **Visualizar Funcionário:** Modal detalhado com todas as informações do funcionário.
 
-### `npm run build`
+#### ✏️ Edição e Exclusão
+- **Editar Funcionário:** Modal para alteração de dados (exceto a foto de perfil).
+- **Excluir Funcionário:** Modal de confirmação para remoção segura.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ⚙️ Tecnologias Utilizadas
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React** - Framework para construção da interface.
+- **JavaScript** - Linguagem principal do projeto.
+- **Firebase** - Utilizado para autenticação e armazenamento de dados.
+- **CSS** - Utilizado para a estilização
+- **Bootstrap** - Estilização e modais responsivos.
+- **React Toastify** - Notificações e alertas personalizados.
+- **IMGUR API** - Hospedagem de imagens de perfil.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Como Executar o Projeto
 
-### `npm run eject`
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-repositorio/facil-gestao.git
+   ```
+2. Acesse a pasta do projeto:
+   ```bash
+   cd facil-gestao
+   ```
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+4. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+5. Acesse no navegador:
+   ```
+   http://localhost:3000
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Desenvolvido por Mateus Dev 🧑‍💻⚡
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
