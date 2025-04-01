@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css"
 
 import { MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
@@ -10,9 +9,7 @@ import { onAuthStateChanged } from "firebase/auth"; // Importa o Firebase Authen
 
 
 // import {ReactComponent as ExcluirIcon} from '../../assets/trash.svg'
-import { ViewIcon } from 'lucide-react';
-import { EditIcon } from 'lucide-react';
-import { TrashIcon } from 'lucide-react';
+import { ViewIcon, EditIcon, TrashIcon } from 'lucide-react';
 
 // import {ReactComponent as ViewIcon} from '../../assets/view-icon.svg'
 
